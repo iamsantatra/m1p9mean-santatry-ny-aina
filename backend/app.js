@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const db = require("./configs/db.config")
-const utilisateurRoutes = require("./routes/utilisateur");
+const utilisateurRoutes = require("./routes/utilisateur.routes");
 
 const app = express();
 
