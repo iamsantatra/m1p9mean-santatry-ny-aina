@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const db = require("./configs/db.config")
 const utilisateurRoutes = require("./routes/utilisateur.routes");
+const restaurantRoutes = require("./routes/restaurant.routes");
 
 const app = express();
 
@@ -20,11 +21,11 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
@@ -59,4 +60,5 @@ app.use((req, res, next) => {
 // });
 
 app.use("/api/utilisateur", utilisateurRoutes);
+app.use("/api/restaurant", restaurantRoutes);
 module.exports = app;
