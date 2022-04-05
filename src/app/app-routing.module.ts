@@ -6,6 +6,7 @@ import { ConnexionComponent } from "./auth/connexion/connexion.component";
 import { RestaurantListeComponent } from "./restaurant/restaurant-liste/restaurant-liste.component";
 
 const routes: Routes = [
+  { path: "", component: AccueilComponent },
   { path: "connexion", component: ConnexionComponent },
   { path: "accueil", component: AccueilComponent },
   { path: "restaurant", component: RestaurantListeComponent }

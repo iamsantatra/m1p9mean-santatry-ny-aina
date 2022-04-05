@@ -41,6 +41,9 @@
                                       </div><!--end col-->
                                   </div> <!--end form-group-->
                               </form><!--end form-->
+                              <div *ngIf="isSignInFailed" class="alert text-center alert-danger border-0 mb-0" role="alert">
+                                <strong>{{ errorMessage }} </strong>
+                              </div>
                               <div class="m-3 text-center text-muted">
                                   <p class="mb-0">Vous n'avez pas de compte ?  <a href="inscription" class="text-primary ms-2">S'inscrire</a></p>
                               </div>

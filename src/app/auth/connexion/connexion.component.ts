@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { TokenStorageService } from '../token-storage.service';
 
 @Component({
   selector: 'app-connexion',
@@ -10,7 +11,10 @@ import { AuthService } from '../auth.service';
 export class ConnexionComponent implements OnInit {
 
   isLoading = false;
-  constructor(public authService: AuthService) { }
+  isSignInFailed: boolean = false;
+  errorMessage: string = "";
+
+  constructor(public authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
   }
@@ -20,7 +24,19 @@ export class ConnexionComponent implements OnInit {
     if(form.invalid)
       return;
     // console.log(form.value);
-    this.authService.login(form.value.email, form.value.motDePasse)
+    this.authService.login(form.value.email, form.value.motDePasse).subscribe(
+      data => {
+        // console.log(data.data);
+        this.isSignInFailed = false;
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data.data);
+        // this.isLoading = false
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isSignInFailed = true;
+        // this.isLoading = false
+      }
+    )
   }
-
 }

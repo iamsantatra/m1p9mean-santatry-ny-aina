@@ -11,6 +11,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { AccueilComponent } from './accueil/accueil.component';
 import { RestaurantListeComponent } from './restaurant/restaurant-liste/restaurant-liste.component';
+import { ErrorComponent } from './error/error.component';
+import { ErrorInterceptor } from "./error-interceptor";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { RestaurantListeComponent } from './restaurant/restaurant-liste/restaura
     HeaderComponent,
     FooterComponent,
     AccueilComponent,
-    RestaurantListeComponent
+    RestaurantListeComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +33,10 @@ import { RestaurantListeComponent } from './restaurant/restaurant-liste/restaura
     HttpClientModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

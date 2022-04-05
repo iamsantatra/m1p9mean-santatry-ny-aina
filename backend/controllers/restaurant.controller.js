@@ -1,8 +1,8 @@
 const Restaurant = require("../models/restaurant.model")
 
 exports.listeRestaurant = async (req, res, next) => {
-  let listeRestaurant = await Restaurant.find()
     try {
+      let listeRestaurant = await Restaurant.find();
       return res.status(200).json({
         message: "Liste des restaurants",
         data: listeRestaurant

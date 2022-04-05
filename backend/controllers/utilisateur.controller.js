@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const Utilisateur = require("../models/utilisateur.model")
 const nodemailer = require("../configs/nodemailer.config");
 
-
 exports.inscription = async (req, res, next) => {
   let hash = await bcrypt.hash(req.body.motDePasse, 10)
     try {
@@ -20,18 +19,20 @@ exports.inscription = async (req, res, next) => {
         confirmationCode: token
       })
       let result = await utilisateur.save()
-          res.status(201).json({
-            message: "L'utilisateur a été enregistré avec succès ! Merci de consulter vos emails",
-            data: result
-          });
-          nodemailer.jsonConfirmationEmail(
-            utilisateur.nom,
-            utilisateur.email,
-            utilisateur.confirmationCode
-          );
+
+      nodemailer.sendConfirmationEmail(
+        utilisateur.nom,
+        utilisateur.email,
+        utilisateur.confirmationCode
+      );
+      return res.status(201).json({
+        message: "L'utilisateur a été enregistré avec succès ! Merci de consulter vos emails",
+        data: result
+      });
     } catch(err) {
-        res.status(500).json({
-          error: err
+        console.log(err)
+        return res.status(500).json({
+          message: "Inscription non valide"
         })
       }
 }
@@ -50,7 +51,7 @@ exports.connexion = async (req, res, next) => {
       .then(result => {
         if (!result) {
           return res.status(401).json({
-            message: "Connexion échouée"
+            message: "E-mail ou mot de passe incorrect"
           });
         }
         if (fetchedUser.status != "active") {
@@ -59,12 +60,14 @@ exports.connexion = async (req, res, next) => {
           });
         }
         const token = jwt.sign(
-          { email: fetchedUser.email, userId: fetchedUser._id },
+          { email: fetchedUser.email, userId: fetchedUser._id, type: fetchedUser.type },
           "secret_this_should_be_longer",
           { expiresIn: "24h" }
         );
+        // console.log(fetchedUser.type)
         res.status(200).json({
-          token: token
+          token: token,
+          data: fetchedUser
         });
       })
     } catch(err) {
@@ -74,23 +77,27 @@ exports.connexion = async (req, res, next) => {
     };
 };
 
-exports.verification = (req, res, next) => {
-  Utilisateur.findOne({
-    confirmationCode: req.params.confirmationCode,
+exports.verification =  async (req, res, next) => {
+  const filter = { confirmationCode: req.params.confirmationCode }
+  let user = Utilisateur.findOne({
+    filter
   })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ message: "Utilisateur inexistant" });
+  try {
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur inexistant" });
+    }
+    const update = { status: "active" };
+    Utilisateur.findOneAndUpdate(filter, update).catch((err) => {
+        return res.status(500).json({ message: err });
       }
-
-      user.status = "active";
-      user.save((err) => {
-        if (err) {
-          res.status(500).json({ message: err });
-          return;
-        }
-      });
-    })
-    .catch((e) => console.log("error", e));
-};
+    );
+    // user.save((err) => {
+    //   if (err) {
+    //     return res.status(500).json({ message: err });
+    //   }
+    // });
+  } catch(e) {
+    console.log(e);
+    return res.status(500).json({ message: e }); }
+}
 

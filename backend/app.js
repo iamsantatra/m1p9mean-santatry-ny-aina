@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const db = require("./configs/db.config")
 const utilisateurRoutes = require("./routes/utilisateur.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
+const platRoutes = require("./routes/plat.routes");
+const commandeRoutes = require("./routes/commande.routes");
 
 const app = express();
 
@@ -61,4 +63,6 @@ app.use((req, res, next) => {
 
 app.use("/api/utilisateur", utilisateurRoutes);
 app.use("/api/restaurant", restaurantRoutes);
+app.use("/api/plat", platRoutes);
+app.use("/api/commande", commandeRoutes);
 module.exports = app;
