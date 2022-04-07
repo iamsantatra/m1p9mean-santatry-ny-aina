@@ -93,3 +93,100 @@ db.plats.insertMany(
 		}
 	]
 )
+
+
+db.utilisateurs.insertMany(
+	[
+		{
+			nom: "Restaurant duo",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "restaurant.duo@gmail.com",
+			type: "restaurant",
+			status: "active",
+      restaurant_id: "624b3eb22a08b22d758a8288"
+		},
+		{
+			nom: "Serependity",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "serependity@gmail.com",
+			type: "restaurant",
+			status: "active",
+      restaurant_id: "624b3eb22a08b22d758a8289"
+		},
+    {
+      nom: "Kibota",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "kibota@gmail.com",
+			type: "restaurant",
+			status: "active",
+      restaurant_id: "624b3eb22a08b22d758a828a"
+		},
+		{
+			nom: "E-kaly",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "e.kaly@gmail.com",
+			type: "e-kaly",
+			status: "active"
+		},
+		{
+			nom: "Livreur 1",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "livreur1@gmail.com",
+			type: "livreur",
+			status: "active"
+		},
+		{
+      nom: "Livreur 2",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "livreur2@gmail.com",
+			type: "livreur",
+			status: "active"
+		}
+	]
+)
+
+db.commandes.aggregate([
+  {
+    $lookup: {
+      from: "plats",
+      localField: "plat_id",
+      foreignField: "_id",
+      as: "commandePlat"
+    }
+  },
+  {
+    $lookup: {
+      from: "restaurants",
+      localField: "commandePlat.restaurant_id",
+      foreignField: "_id",
+      as: "restaurantCommande"
+    }
+  },
+  {
+    $project: {
+        "_id":0,
+        "commandePlat._id":0,
+        "restaurantCommande._id":0
+    }
+  }
+]).toArray()
+
+
+db.createView('VCommande','commandes', [
+  {
+    $lookup: {
+      from: "plats",
+      localField: "plat_id",
+      foreignField: "_id",
+      as: "commandePlat"
+    },
+  },
+  {
+    $lookup: {
+      from: "restaurants",
+      localField: "commandePlat.restaurant_id",
+      foreignField: "_id",
+      as: "commandeRestaurant"
+    }
+  }
+])

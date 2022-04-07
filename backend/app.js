@@ -6,6 +6,8 @@ const utilisateurRoutes = require("./routes/utilisateur.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const platRoutes = require("./routes/plat.routes");
 const commandeRoutes = require("./routes/commande.routes");
+const Commandes = require("./models/commande.model")
+
 
 const app = express();
 

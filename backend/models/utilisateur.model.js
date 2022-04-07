@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const uniqueValidator = require("mongoose-unique-validator")
+var Schema = mongoose.Schema;
 
 const utilisateurSchema = mongoose.Schema({
   nom: {
@@ -28,9 +29,12 @@ const utilisateurSchema = mongoose.Schema({
   },
   confirmationCode: {
     type: String,
-    unique: true },
-},
-{ timestamps: true }
+    // unique: true
+  },
+  restaurant_id: {
+    type: Schema.Types.ObjectId, ref: 'Restaurant'
+  }
+}
 );
 
 utilisateurSchema.plugin(uniqueValidator)

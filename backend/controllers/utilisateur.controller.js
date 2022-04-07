@@ -40,6 +40,7 @@ exports.inscription = async (req, res, next) => {
 exports.connexion = async (req, res, next) => {
   let fetchedUser;
   let user = await Utilisateur.findOne({ email: req.body.email })
+  // console.log(user)
     try {
       if (!user) {
         return res.status(401).json({
@@ -51,7 +52,7 @@ exports.connexion = async (req, res, next) => {
       .then(result => {
         if (!result) {
           return res.status(401).json({
-            message: "E-mail ou mot de passe incorrect"
+            message: "Mot de passe incorrect"
           });
         }
         if (fetchedUser.status != "active") {
@@ -59,12 +60,13 @@ exports.connexion = async (req, res, next) => {
             message: "Compte en attente de validation",
           });
         }
+        // console.log(fetchedUser)
         const token = jwt.sign(
-          { email: fetchedUser.email, userId: fetchedUser._id, type: fetchedUser.type },
+          { userId: fetchedUser._id, type: fetchedUser.type, restaurant_id: fetchedUser.restaurant_id },
           "secret_this_should_be_longer",
           { expiresIn: "24h" }
         );
-        // console.log(fetchedUser.type)
+        // console.log(fetchedUser.restaurant_id)
         res.status(200).json({
           token: token,
           data: fetchedUser

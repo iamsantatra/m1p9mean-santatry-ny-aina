@@ -18,10 +18,10 @@ exports.listePlatRestaurant = async (req, res, next) => {
     ]
   })
   try {
-      return res.status(200).json({
-        message: "Liste des plats du restaurant_id "+req.params.restaurant_id,
-        data: listePlatRestaurant
-      });
+    return res.status(200).json({
+      message: "Liste des plats du restaurant_id "+req.params.restaurant_id,
+      data: listePlatRestaurant
+    });
   } catch(err) {
     return res.status(500).json({
       message: "Une erreur s'est produite",
@@ -29,3 +29,4 @@ exports.listePlatRestaurant = async (req, res, next) => {
     });
   };
 };
+

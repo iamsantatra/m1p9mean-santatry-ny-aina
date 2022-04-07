@@ -12,7 +12,10 @@ const commandeSchema = mongoose.Schema({
     type: Schema.Types.ObjectId, ref: 'Utilisateur',
     required: true
   },
-  etat : { // ingredient
+  livreur_id: {
+    type: Schema.Types.ObjectId, ref: 'Utilisateur',
+  },
+  etat : {
     type: Number,
     enum: [0, 1, 2],
     default: 0
@@ -36,7 +39,7 @@ const commandeSchema = mongoose.Schema({
   dateLivraison: {
     type: Date,
     required: true
-  }
+  },
 }
 );
 

@@ -13,6 +13,8 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { RestaurantListeComponent } from './restaurant/restaurant-liste/restaurant-liste.component';
 import { ErrorComponent } from './error/error.component';
 import { ErrorInterceptor } from "./error-interceptor";
+import { PlatComponent } from './plat/plat.component';
+import { PlatListeComponent } from './plat/plat-liste/plat-liste.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ErrorInterceptor } from "./error-interceptor";
     FooterComponent,
     AccueilComponent,
     RestaurantListeComponent,
-    ErrorComponent
+    ErrorComponent,
+    PlatComponent,
+    PlatListeComponent
   ],
   imports: [
     BrowserModule,

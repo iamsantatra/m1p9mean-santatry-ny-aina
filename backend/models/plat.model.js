@@ -38,3 +38,4 @@ const platSchema = mongoose.Schema({
 
 platSchema.plugin(uniqueValidator)
 module.exports = mongoose.model("Plat", platSchema)
+

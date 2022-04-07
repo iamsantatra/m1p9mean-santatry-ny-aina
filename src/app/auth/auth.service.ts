@@ -4,6 +4,9 @@ import { HttpClient } from "@angular/common/http";
 import { AuthData } from './auth-data.model';
 import { throwError } from 'rxjs';
 import { Utilisateur } from './utilisateur.model';
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl + "/utilisateur";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +32,6 @@ export class AuthService {
 
   login(email: string, motDePasse: string) {
     const authData: AuthData = {email: email, motDePasse: motDePasse};
-    return this.http.post<{token: string, data: Utilisateur}>("http://localhost:3000/api/utilisateur/connexion", authData)
+    return this.http.post<{token: string, data: Utilisateur}>(BACKEND_URL + "/connexion", authData)
   }
 }
