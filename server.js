@@ -44,9 +44,9 @@ const onListening = () => {
 };
 
 // app.use(express.static('dist'));
-app.get('*', (req, res)=>{
-    res.sendFile(path.join(__dirname,'./dist/e-kaly/index.html'));
-})
+// app.get('*', (req, res)=>{
+//     res.sendFile(path.join(__dirname,'./dist/e-kaly/index.html'));
+// })
 
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
