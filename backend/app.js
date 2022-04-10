@@ -22,6 +22,9 @@ mongoose.connect(db.url)
     console.log(error)
   })
 
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
