@@ -17,8 +17,9 @@ mongoose.connect(db.url)
   .then(() => {
     console.log('Connected to database!')
   })
-  .catch(() => {
+  .catch((error) => {
     console.log('Connection failed!')
+    console.log(error)
   })
 
 app.use((req, res, next) => {
