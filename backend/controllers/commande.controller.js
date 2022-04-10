@@ -7,6 +7,7 @@ const VCommande = require("../models/vcommande.model")
 
 
 exports.commandePlat = async (req, res, next) => {
+    // console.log(req.body)
     const plat = await Plat.findOne({
       "$and":[
       {_id: req.body.plat_id},
@@ -14,7 +15,7 @@ exports.commandePlat = async (req, res, next) => {
     ]})
     if(plat == null) {
       return res.status(404).json({
-        message: "Plat inexistant"
+        message: "Plat inexistant ou épuisé"
       });
     }
 
@@ -24,21 +25,29 @@ exports.commandePlat = async (req, res, next) => {
     }
     const nDate = new Date().toLocaleString('fr-FR', {
       timeZone: 'Africa/Nairobi'
-    });
+    });;
     console.log("Date zao "+nDate)
+    console.log("Date zao "+new Date(nDate).getTime())
     let dateLivraison = new Date(req.body.dateLivraison).toLocaleString('fr-FR', {
       timeZone: 'Africa/Nairobi'
     });
-    if(dateLivraison < nDate) {
+    console.log("date de livraison "+dateLivraison);
+    console.log("date de livraison "+new Date(req.body.dateLivraison).getTime());
+    let dateL = new Date(req.body.dateLivraison)
+    dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
+
+    let dateA = new Date()
+    dateA = dateA.getDate + "/" + dateA.getMonth + "/" + dateA.getDay+", "+dateA.getTime()+":"+dateA.getMinutes+":"+dateA.getSeconds
+    if(dateL < dateA) {
       return res.status(403).json({
         message: "Date de livraison invalide"
       });
     }
-    console.log("date de livraison "+dateLivraison);
-
+    dateLivraison = new Date(req.body.dateLivraison)
+    dateLivraison.setHours( dateLivraison.getHours() + 3);
     const commande = new Commande({
       plat_id: req.body.plat_id,
-      utilisateur_id: req.body.utilisateur_id,
+      utilisateur_id: req.userData.userId,
       etat: 0,
       lieu: req.body.lieu,
       typeLivraison: req.body.typeLivraison,
@@ -55,7 +64,8 @@ exports.commandePlat = async (req, res, next) => {
     } catch(error) {
       console.log(error)
       return res.status(500).json({
-        message: "Une erreur de commande s'est produite"
+        message: "Une erreur de commande s'est produite",
+        error: error
       });
     }
 }
@@ -91,7 +101,12 @@ exports.updateCommande = async (req, res, next) => {
         let livreur_id = ObjectID(req.body.livreur_id)
         let commandeLivreur = await Commande.findOne({ "livreur_id": livreur_id});
         let commandeCorrespondant = await Commande.findOne({ "_id": id});
-        if(commandeLivreur.dateLivraison.getTime() == commandeCorrespondant.dateLivraison.getTime()) {
+
+        let dateL = new Date(commandeLivreur.dateLivraison)
+        dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
+        let dateC = new Date(ommandeCorrespondant.dateLivraison)
+        dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
+        if(dateL == dateC ) {
           // console.log("dsids")
           return res.status(403).json({ message: "Livreur non disponible" });
         }
@@ -243,4 +258,3 @@ exports.deleteCommande = async (req, res, next) => {
     });
   }
 };
-

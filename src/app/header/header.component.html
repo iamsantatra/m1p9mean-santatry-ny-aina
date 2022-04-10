@@ -16,20 +16,32 @@
     <!-- Navbar -->
     <nav class="navbar-custom">
         <ul class="list-unstyled topbar-nav float-end mb-0">
-
-          <li class="dropdown notification-list">
-            <a class="nav-link arrow-none nav-icon" data-bs-toggle="dropdown" href="#" role="button"
-                aria-haspopup="false" aria-expanded="false">
+          <li class="notification-list">
+            <a class="nav-link arrow-none nav-icon" href="panier" role="button"
+                >
                 <i class="ti ti-shopping-cart"></i>
-                <span class="alert-badge"></span>
+                <!-- <span *ngIf="status" class="alert-badge"></span> -->
             </a>
           </li>
+          <!-- <li class="notification-list"  *ngIf="connecter == true">
+            <a class="nav-link nav-user" role="button" aria-expanded="false">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <span class="d-none d-md-block fw-semibold font-12">{{  nom  }}</span>
+                    </div>
+                </div>
+            </a>
+        </li> -->
 
           <li class="notification-list">
-            <a class="nav-link arrow-none nav-icon " href="connexion" role="button" aria-controls="Rightbar">
+            <a *ngIf="!isLoggedIn" class="nav-link arrow-none nav-icon " href="connexion" role="button" aria-controls="Rightbar">
                 <i class="ti ti-login "></i>
             </a>
+            <a *ngIf="isLoggedIn" class="nav-link arrow-none nav-icon " (click)="onLogout()" role="button" aria-controls="Rightbar">
+              <i class="ti ti-logout "></i>
+            </a>
           </li>
+
           <li class="menu-item">
             <!-- Mobile menu toggle-->
             <a class="navbar-toggle nav-link" id="mobileToggle"  onclick="toggleMenu()" onclick="toggleMenu()">

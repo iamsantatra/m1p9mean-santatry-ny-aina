@@ -17,7 +17,7 @@
                               </div>
                           </div>
                           <div class="card-body pt-0">
-                              <form (submit)="onLogin(loginForm)" #loginForm="ngForm" class="my-4" action="/" >
+                              <form (submit)="onLogin(loginForm)"  #loginForm="ngForm" class="my-4" action="/" >
                                   <div class="form-group mb-2">
                                     <label class="form-label" for="email">Email</label>
                                     <input type="email" ngModel [ngClass]="{ 'is-invalid': loginForm.submitted && emailInput.invalid }"  class="form-control" id="email" name="email" #emailInput="ngModel" placeholder="Entrer l'e-mail" required email>
@@ -41,7 +41,7 @@
                                       </div><!--end col-->
                                   </div> <!--end form-group-->
                               </form><!--end form-->
-                              <div *ngIf="isSignInFailed" class="alert text-center alert-danger border-0 mb-0" role="alert">
+                              <div *ngIf="isLoginFailed" class="alert text-center alert-danger border-0 mb-0" role="alert">
                                 <strong>{{ errorMessage }} </strong>
                               </div>
                               <div class="m-3 text-center text-muted">

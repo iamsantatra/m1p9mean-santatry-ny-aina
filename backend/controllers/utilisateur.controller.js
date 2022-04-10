@@ -69,7 +69,8 @@ exports.connexion = async (req, res, next) => {
         // console.log(fetchedUser.restaurant_id)
         res.status(200).json({
           token: token,
-          data: fetchedUser
+          data: fetchedUser,
+          expiresIn: 86400
         });
       })
     } catch(err) {

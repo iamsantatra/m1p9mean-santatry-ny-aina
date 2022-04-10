@@ -1,0 +1,62 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+
+    <!-- Page Content-->
+    <div class="page-content-tab">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Détail plat</h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 offset-lg-1 align-self-center">
+                                  <img *ngIf="plat" src="{{ plat.image }}" alt="" class="mx-auto  d-block" height="300">
+                                </div><!--end col-->
+                                <div class="col-lg-4 offset-lg-2 align-self-center">
+                                    <div class="">
+                                        <span *ngIf="plat" class="badge badge-soft-success font-14 fw-semibold mb-2">{{ plat.categorie }}</span>
+                                        <h5 *ngIf="plat" class="font-30 mb-0">{{ plat.nomPlat }}</h5>
+                                        <h6 *ngIf="plat" class="font-30 fw-bold text-primary mb-3">{{ plat.prixVente  | currency}}</h6>
+                                        <h6 *ngIf="plat" class="font-13 fw-bold">Description :</h6>
+                                        <p *ngIf="plat" class="text-muted">{{ plat.description }}
+                                        </p>
+                                        <div class="mt-3">
+                                          <form (submit)="onAjout(plat)" #ajoutForm="ngForm" action="/">
+                                            <!-- <input ngModel="1" [ngClass]="{ 'is-invalid': ajoutForm.submitted && quantiteInput.invalid }" class="form-control d-inline-block" name="quantite" style="width:100px;" type="number" min="0"  id="example-number-input" #quantiteInput="ngModel"  required> -->
+                                            <button href="" type="submit" class="btn btn-primary px-4 d-inline-block"><i class="mdi mdi-cart me-2"></i>Ajouter</button>
+                                            <!-- <div class="invalid-feedback" *ngIf="quantiteInput.invalid">Veuillez saisir une quantité valide</div> -->
+                                          </form>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                            </div><!--end row-->
+                        </div><!--end card-body-->
+                    </div><!--end card-->
+                </div><!--end col-->
+            </div><!--end row-->
+        </div><!-- container -->
+        <!--Start Footer-->
+        <!-- Footer Start -->
+        <app-footer></app-footer>
+        <!-- end Footer -->
+        <!--end footer-->
+    </div>
+    <!-- end page content -->
+  </div>
+  <!-- end page-wrapper -->
+
+  <!-- Javascript  -->
+  <!-- App js -->
+  <!-- <script src="assets/js/app.js"></script> -->
+</body>

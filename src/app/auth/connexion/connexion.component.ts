@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { TokenStorageService } from '../token-storage.service';
 
@@ -9,35 +9,67 @@ import { TokenStorageService } from '../token-storage.service';
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.css']
 })
-export class ConnexionComponent implements OnInit {
+export class ConnexionComponent implements OnInit{
 
   isLoading = false;
-  isSignInFailed: boolean = false;
-  errorMessage: string = "";
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  type: string = '';
+  constructor(
+    public authService: AuthService,
+    public tokenStorage: TokenStorageService,
+    public router: Router) {}
 
-  constructor(public authService: AuthService, private tokenStorage: TokenStorageService) { }
+  ngOnInit() {
 
-  ngOnInit(): void {
+    // console.log(this.tokenStorage.getToken())
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.type = this.tokenStorage.getUser().type;
+      // this.redirection(this.type)
+    }
   }
 
   onLogin(form: NgForm) {
-    // this.isLoading = true
-    if(form.invalid)
+    if (form.invalid) {
       return;
-    // console.log(form.value);
-    this.authService.login(form.value.email, form.value.motDePasse).subscribe(
-      data => {
-        // console.log(data.data);
-        this.isSignInFailed = false;
+    }
+    this.isLoading = true;
+    this.authService.login(form.value.email, form.value.motDePasse).subscribe({
+      next: data => {
         this.tokenStorage.saveToken(data.token);
         this.tokenStorage.saveUser(data.data);
-        // this.isLoading = false
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.type = this.tokenStorage.getUser().type;
+        this.redirection(this.type)
       },
-      err => {
+      error: err => {
         this.errorMessage = err.error.message;
-        this.isSignInFailed = true;
-        // this.isLoading = false
+        this.isLoginFailed = true;
       }
-    )
+    });
+    this.isLoading = false;
+  }
+
+  redirection(type: string) {
+    switch(type) {
+      case 'client':
+        this.router.navigate(["/"]);
+        break;
+      case 'e-kaly':
+        this.router.navigate(["/commande"]);
+        break;
+      case 'livreur':
+        this.router.navigate(["/livraison"]);
+        break;
+      case 'restaurant':
+        this.router.navigate(["/commande"]);
+        break;
+      default:
+        this.router.navigate(["/"]);
+        break;
+    }
   }
 }

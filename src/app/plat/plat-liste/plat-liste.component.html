@@ -1,1 +1,51 @@
-<p>plat-liste works!</p>
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+
+    <!-- Page Content-->
+    <div class="page-content-tab">
+
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Plat</h4>
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div>
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-md-3" *ngFor="let plat of plats; index as i">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{ plat.image }}" alt="{{ plat.nomPlat }}" class="d-block mx-auto my-4" height="150">
+                            <div class="d-flex justify-content-between align-items-center my-4">
+                              <div>
+                                <p class="text-muted mb-2">{{ plat.categorie }}</p>
+                                <a *ngIf="plat.etat==1" [routerLink]="['/detailPlat', plat.id]" class="header-title">{{ plat.nomPlat }}</a>
+                                <a *ngIf="plat.etat==0" href="#" class="header-title">{{ plat.nomPlat }}</a>
+                            </div>
+                              <div>
+                                <h4 class="text-dark mt-0 mb-2"><small>{{ plat.prixVente | currency }}</small></h4>
+                              </div>
+                            </div>
+                            <div class="d-grid">
+                                <a class="btn btn-soft-primary" [routerLink]="['/detailPlat', plat.id]" *ngIf="plat.etat==1">Commandez</a>
+                                <button class="btn btn-soft-primary"  *ngIf="plat.etat==0" disabled>Épuisé</button>
+                            </div>
+                        </div><!--end card-body-->
+                    </div><!--end card-->
+                </div><!--end col-->
+            </div>
+        </div><!-- container -->
+        <!--Start Footer-->
+        <!-- Footer Start -->
+        <app-footer></app-footer>
+        <!-- end Footer -->
+        <!--end footer-->
+    </div>
+    <!-- end page content -->
+  </div>
+  <!-- end page-wrapper -->
+</body>
