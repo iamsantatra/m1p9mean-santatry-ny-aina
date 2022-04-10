@@ -7,6 +7,7 @@ const restaurantRoutes = require("./routes/restaurant.routes");
 const platRoutes = require("./routes/plat.routes");
 const commandeRoutes = require("./routes/commande.routes");
 const Commandes = require("./models/commande.model")
+path = require('path')
 
 
 const app = express();
@@ -22,7 +23,8 @@ mongoose.connect(db.url)
     console.log(error)
   })
 
-var distDir = __dirname + "/dist/";
+var distDir = path.join(__dirname +  "../dist/");
+console.log(distDir)
 app.use(express.static(distDir));
 
 app.use((req, res, next) => {
