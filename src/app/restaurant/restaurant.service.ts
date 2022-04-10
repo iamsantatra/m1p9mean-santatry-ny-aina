@@ -4,7 +4,7 @@ import { map, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Restaurant } from './restaurant.model';
 
-const BACKEND_URL = environment.apiUrl + "/restaurant";
+const BACKEND_URL = /*environment.apiUrl + */"restaurant";
 @Injectable({
   providedIn: 'root'
 })

@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { map, Subject } from 'rxjs';
 import { Plat } from './plat.model';
 
-const BACKEND_URL = environment.apiUrl + "/plat";
+const BACKEND_URL = /*environment.apiUrl + */"plat";
 @Injectable({
   providedIn: 'root'
 })
