@@ -102,17 +102,17 @@ exports.updateCommande = async (req, res, next) => {
         let commandeLivreur = await Commande.findOne({ "livreur_id": livreur_id});
         let commandeCorrespondant = await Commande.findOne({ "_id": id});
 
-        // if(commandeLivreur != null) {
-        //   console.log(commandeLivreur.dateLivraison)
-        //   let dateL = new Date(commandeLivreur.dateLivraison)
-        //   dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
-        //   let dateC = new Date(commandeCorrespondant.dateLivraison)
-        //   dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
-        //   if(dateL == dateC ) {
-        //     // console.log("dsids")
-        //     return res.status(403).json({ message: "Livreur non disponible" });
-        //   }
-        // }
+        if(commandeLivreur != null) {
+          console.log(commandeLivreur.dateLivraison)
+          let dateL = new Date(commandeLivreur.dateLivraison)
+          dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
+          let dateC = new Date(commandeCorrespondant.dateLivraison)
+          dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
+          if(dateL == dateC && commandeCorrespondant.utilisateur_id !== commandeLivreur.utilisateur_id) {
+            // console.log("dsids")
+            return res.status(403).json({ message: "Livreur non disponible" });
+          }
+        }
         // console.log(commandeLivreur)
         messageSucces = "Commande validée par e-kaly"
         avadika_etat = 2
