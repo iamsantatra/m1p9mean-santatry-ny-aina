@@ -141,7 +141,15 @@ db.utilisateurs.insertMany(
 			email: "livreur2@gmail.com",
 			type: "livreur",
 			status: "active"
-		}
+		},
+    {
+			nom: "Jerico rakotova",
+			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
+			email: "jerico@gmail.com",
+			type: "client",
+			status: "active",
+      restaurant_id: "624b3eb22a08b22d758a8289"
+		},
 	]
 )
 
@@ -187,6 +195,14 @@ db.createView('VCommande','commandes', [
       localField: "commandePlat.restaurant_id",
       foreignField: "_id",
       as: "commandeRestaurant"
+    }
+  },
+  {
+    $lookup: {
+      from: "utilisateurs",
+      localField: "utilisateur_id",
+      foreignField: "_id",
+      as: "commandeUtilisateur"
     }
   }
 ])

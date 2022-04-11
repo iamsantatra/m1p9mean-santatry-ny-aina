@@ -21,7 +21,7 @@ module.exports.sendConfirmationEmail = (name, email, confirmationCode) => {
     html: `<h1>Email Confirmation</h1>
         <h2>Bonjour ${name}</h2>
         <p>Merci de vous être abonné. Veuillez confirmer votre email en cliquant sur le lien suivant        </p>
-        <a href=http://localhost:3000/api/utilisateur/confirmation/${confirmationCode}> Cliquez ici</a>
+        <a href=http://m1p9mean-santatry-ny-aina.herokuapp.com/api/utilisateur/confirmation/${confirmationCode}> Cliquez ici</a>
         </div>`,
   }).catch(err => console.log(err));
 };

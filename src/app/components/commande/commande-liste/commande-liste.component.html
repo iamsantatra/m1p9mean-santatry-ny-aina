@@ -1,0 +1,205 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="page-content-tab">
+
+      <div class="container-fluid">
+          <!-- Page-Title -->
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="page-title-box">
+                      <h4 class="page-title"></h4>
+                  </div><!--end page-title-box-->
+              </div><!--end col-->
+          </div>
+          <!-- end page title end breadcrumb -->
+          <!-- <div *ngIf="errorMessage" class="alert text-center alert-danger border-0 mb-0" role="alert">
+            <strong>{{ errorMessage }} </strong>
+          </div> -->
+          <!-- <div  *ngIf="errorMessage" class="row">
+              <div class="col-lg-6">
+                <div class="alert custom-alert custom-alert-danger icon-custom-alert shadow-sm fade show" role="alert">
+                  <i class="la la-skull-crossbones alert-icon text-danger align-self-center font-30 me-3"></i>
+                  <div class="alert-text my-1">
+                      <h5 class="mb-1 fw-bold mt-0">Erreur</h5>
+                      <span>{{ errorMessage }}.</span>
+                  </div>
+                  <div class="alert-close">
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+              </div>
+          </div> -->
+            <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4 class="card-title">Commandes</h4>
+                            </div><!--end col-->
+                        </div>  <!--end row-->
+                      </div><!--end card-header-->
+                      <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr *ngIf="type == 'restaurant'">
+                                      <th>Nom plat</th>
+                                      <th>Prix</th>
+                                      <th>Quantité</th>
+                                      <th>Total</th>
+                                      <th>Action</th>
+                                    </tr>
+                                    <tr *ngIf="type == 'e-kaly'">
+                                      <th>Nom plat</th>
+                                      <th>Restaurant</th>
+                                      <th>Client</th>
+                                      <th>Lieu</th>
+                                      <th>Livreur</th>
+                                      <th>Prix</th>
+                                      <th>Quantité</th>
+                                      <th>Total</th>
+                                      <th>Date</th>
+                                      <th>Action</th>
+                                  </tr>
+                                  <tr *ngIf="type == 'livreur'">
+                                    <th>Nom plat</th>
+                                    <th>Restaurant</th>
+                                    <th>Lieu</th>
+                                    <th>Quantité</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody *ngIf="type == 'restaurant'">
+                                    <tr *ngFor="let commande of commandes">
+                                        <td>
+                                            <img src="{{ commande.plat.image }}" alt="" height="40" class="me-2">
+                                            <p class="d-inline-block align-middle mb-0">
+                                                <a href="" class="d-inline-block align-middle mb-0 product-name">{{ commande.plat.nomPlat }}</a>
+                                                <br>
+                                                <span class="text-muted font-13">{{ commande.plat.categorie }}</span>
+                                            </p>
+                                        </td>
+                                        <td>
+                                          {{ commande.commande.quantite }}
+                                        </td>
+                                        <td>
+                                          {{ commande.plat.prixVente | currency }}
+                                        </td>
+                                        <td>{{ commande.plat.prixVente * commande.commande.quantite | currency }}</td>
+                                        <td>
+                                          <div *ngIf="commande.commande.etat==1" class="button-items">
+                                            <a class="btn btn-outline-secondary" ><i class="mdi mdi-bell-sleep-outline me-2"></i>En attente</a>
+                                              <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
+                                          </div>
+                                          <div *ngIf="commande.commande.etat==0" class="button-items">
+                                            <form style="display: inline;" (submit)="commander(commande.commande.id)"  #commandeForm="ngForm" action="/" >
+                                              <button type="submit" class="btn btn-outline-success"><i class="mdi mdi-send me-2"></i>Valider</button>
+                                            </form>
+                                              <button (click)="annuler(commande.commande.id)" class="btn btn-outline-danger"><i class="mdi mdi-trash-can-outline me-2"></i>Annuler</button>
+                                          </div>
+                                      </td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="type == 'e-kaly'">
+
+                                  <tr *ngFor="let commande of commandes; let i = index">
+                                    <td>
+                                          <img src="{{ commande.plat.image }}" alt="" height="40" class="me-2">
+                                          <p class="d-inline-block align-middle mb-0">
+                                              <a href="" class="d-inline-block align-middle mb-0 product-name">{{ commande.plat.nomPlat }}</a>
+                                              <br>
+                                              <span class="text-muted font-13">{{ commande.plat.categorie }}</span>
+                                          </p>
+                                      </td>
+                                      <td>{{ commande.restaurant.nom }}</td>
+                                      <td>
+                                        {{ commande.utilisateur.nom }}
+                                      </td>
+                                      <td>{{  commande.commande.lieu }}</td>
+                                      <td>
+
+                                        <select [(ngModel)]="selectedOption" class="form-select" required>
+                                          <option class="w-20" *ngFor="let user of users" [value]="user.id">{{ user.nom }}</option>
+                                        </select>
+                                      </td>
+                                      <td>{{  commande.plat.prixVente | currency }}</td>
+                                      <td>{{  commande.commande.quantite }}</td>
+                                      <td>{{  commande.commande.quantite * commande.plat.prixVente | currency }}</td>
+                                      <td>{{   commande.commande.dateLivraison  | date: 'medium'}}</td>
+                                      <td>
+                                        <div *ngIf="commande.commande.etat==0" class="button-items">
+                                          <a class="btn btn-outline-secondary" ><i class="mdi mdi-bell-sleep-outline me-2"></i>En attente</a>
+                                            <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
+                                        </div>
+                                        <div *ngIf="commande.commande.etat==1" class="button-items">
+                                          <form style="display: inline;" (submit)="commander(commande.commande.id)"  #commandeForm="ngForm" action="/" >
+                                            <button type="submit" class="btn btn-outline-success"><i class="mdi mdi-send me-2"></i>Valider</button>
+                                          </form>
+                                            <button (click)="annuler(commande.commande.id)" class="btn btn-outline-danger"><i class="mdi mdi-trash-can-outline me-2"></i>Annuler</button>
+                                        </div>
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                                <tbody *ngIf="type == 'livreur'">
+                                  <tr *ngFor="let commande of commandes">
+                                      <td>
+                                          <img src="{{ commande.plat.image }}" alt="" height="40" class="me-2">
+                                          <p class="d-inline-block align-middle mb-0">
+                                              <a href="" class="d-inline-block align-middle mb-0 product-name">{{ commande.plat.nomPlat }}</a>
+                                              <br>
+                                              <span class="text-muted font-13">{{ commande.plat.categorie }}</span>
+                                          </p>
+                                      </td>
+                                      <td>{{  commande.restaurant.nom }}</td>
+                                      <td>{{  commande.commande.lieu }}</td>
+                                      <td>{{  commande.commande.quantite }}</td>
+                                      <td>{{  commande.commande.dateLivraison  | date:'medium' }}</td>
+                                      <td>
+                                        <div class="button-items">
+                                          <form style="display: inline;" (submit)="commander(commande.commande.id)"  #commandeForm="ngForm" action="/" >
+                                            <button type="submit" class="btn btn-outline-success"><i class="mdi mdi-send me-2"></i>Livrer</button>
+                                          </form>
+                                        </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div  *ngIf="errorMessage" class="row">
+                          <div class="col-lg-6">
+                            <div class="alert custom-alert custom-alert-danger icon-custom-alert shadow-sm fade show" role="alert">
+                              <i class="la la-skull-crossbones alert-icon text-danger align-self-center font-30 me-3"></i>
+                              <div class="alert-text my-1">
+                                  <h5 class="mb-1 fw-bold mt-0">Erreur</h5>
+                                  <span>{{ errorMessage }}.</span>
+                              </div>
+                              <div class="alert-close">
+                                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                          </div>
+                      </div>
+                      </div><!--end card-->
+                  </div><!--end card-body-->
+                </div><!--end col-->
+            </div><!--end row-->
+      </div><!-- container -->
+
+      <!--Start Footer-->
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+      <!-- end Footer -->
+      <!--end footer-->
+  </div>
+  <!-- end page content -->
+</div>
+<!-- end page-wrapper -->

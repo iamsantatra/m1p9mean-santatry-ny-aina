@@ -1,0 +1,86 @@
+  <!-- Top Bar Start -->
+  <div class="topbar">
+    <!-- LOGO -->
+    <div class="brand">
+        <a href="accueil" class="logo">
+            <span>
+                <img src="assets/images/logo-sm.png" alt="logo-small" class="logo-sm">
+            </span>
+            <span>
+                <img src="assets/images/logo.png" alt="logo-large" class="logo-lg logo-light">
+                <img src="assets/images/logo-dark.png" alt="logo-large" class="logo-lg logo-dark">
+            </span>
+        </a>
+    </div>
+    <!--end logo-->
+    <!-- Navbar -->
+    <nav class="navbar-custom">
+        <ul class="list-unstyled topbar-nav float-end mb-0">
+          <li class="notification-list">
+            <a class="nav-link arrow-none nav-icon" href="panier" role="button">
+                <i class="ti ti-shopping-cart"></i>
+                <!-- <span *ngIf="status" class="alert-badge"></span> -->
+            </a>
+          </li>
+          <li class="notification-list"  *ngIf="isLoggedIn">
+            <a class="nav-link nav-user" role="button" aria-expanded="false">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <span class="d-none d-md-block fw-semibold font-12">{{  nom  }}</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+
+          <li class="notification-list">
+            <a *ngIf="!isLoggedIn" class="nav-link arrow-none nav-icon " href="connexion" role="button" aria-controls="Rightbar">
+                <i class="ti ti-login "></i>
+            </a>
+            <a *ngIf="isLoggedIn" class="nav-link arrow-none nav-icon " (click)="onLogout()" role="button" aria-controls="Rightbar">
+              <i class="ti ti-logout "></i>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <!-- Mobile menu toggle-->
+            <a class="navbar-toggle nav-link" id="mobileToggle"  onclick="toggleMenu()" onclick="toggleMenu()">
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </a><!-- End mobile menu toggle-->
+        </li> <!--end menu item-->
+
+        </ul><!--end topbar-nav-->
+
+        <div class="navbar-custom-menu">
+            <div id="navigation">
+                <!-- Navigation Menu-->
+                <ul class="navigation-menu">
+                    <li class="nav-item dropdown parent-menu-item">
+                        <a class="nav-link" href="accueil" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <span><i class="ti ti-smart-home menu-icon"></i>Accueil</span>
+                        </a>
+                    </li><!--end nav-item-->
+
+                    <li class="nav-item dropdown parent-menu-item">
+                      <a class="nav-link" href="restaurant" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-truck-delivery menu-icon"></i>Commandez</span>
+                      </a>
+                    </li><!--end nav-item-->
+
+                    <li class="nav-item dropdown parent-menu-item">
+                      <a class="nav-link" href="" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-accessible menu-icon"></i>À propos</span>
+                      </a>
+                    </li><!--end nav-item-->
+
+                </ul><!-- End navigation menu -->
+            </div> <!-- end navigation -->
+        </div>
+        <!-- Navbar -->
+    </nav>
+    <!-- end navbar-->
+</div>
+<!-- Top Bar End -->

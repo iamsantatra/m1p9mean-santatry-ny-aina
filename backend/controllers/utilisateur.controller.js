@@ -104,3 +104,20 @@ exports.verification =  async (req, res, next) => {
     return res.status(500).json({ message: e }); }
 }
 
+exports.listeLivreur = async (req, res, next) => {
+  try {
+    let listeLivreur = await Utilisateur.find({
+      type: "livreur"
+    });
+    return res.status(200).json({
+      message: "Liste des livreurs",
+      data: listeLivreur
+    });
+  } catch(err) {
+    return res.status(500).json({
+      message: "Une erreur s'est produite",
+      error: err
+    });
+  };
+};
+

@@ -102,13 +102,16 @@ exports.updateCommande = async (req, res, next) => {
         let commandeLivreur = await Commande.findOne({ "livreur_id": livreur_id});
         let commandeCorrespondant = await Commande.findOne({ "_id": id});
 
-        let dateL = new Date(commandeLivreur.dateLivraison)
-        dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
-        let dateC = new Date(ommandeCorrespondant.dateLivraison)
-        dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
-        if(dateL == dateC ) {
-          // console.log("dsids")
-          return res.status(403).json({ message: "Livreur non disponible" });
+        if(commandeLivreur != null) {
+          console.log(commandeLivreur.dateLivraison)
+          let dateL = new Date(commandeLivreur.dateLivraison)
+          dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
+          let dateC = new Date(commandeCorrespondant.dateLivraison)
+          dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
+          if(dateL == dateC ) {
+            // console.log("dsids")
+            return res.status(403).json({ message: "Livreur non disponible" });
+          }
         }
         // console.log(commandeLivreur)
         messageSucces = "Commande validée par e-kaly"
@@ -156,7 +159,7 @@ exports.updateCommande = async (req, res, next) => {
 
     return res.status(200).json({
       message: messageSucces,
-      // data: result
+      // data: vCommande
     });
   } catch(error) {
     console.log(error)
@@ -192,14 +195,15 @@ exports.listeCommande = async (req, res, next) => {
         break;
       case 'livreur':
         listeCommande = await VCommande.find({
-            etat: 2
+          "etat": 2,
+          "livreur_id": ObjectID(req.userData.userId)
         })
         break;
       default:
         console.log("Tsy misy type")
         return res.status(401).json({ message: "Acces non autorisé" });
     }
-
+    // console.log( listeCommande)
     return res.status(200).json({
       message: "Liste des commandes",
       data: listeCommande
@@ -214,14 +218,16 @@ exports.listeCommande = async (req, res, next) => {
 };
 
 exports.deleteCommande = async (req, res, next) => {
-
+  console.log(req.params.id)
   try {
-    if(req.params.id == undefined)
+
+    if(req.params.id == undefined) {
       return res.status(403).json({ message: "Veuillez indiqué la commande" });
+    }
     let id =  ObjectID(req.params.id);
     switch(req.userData.type) {
       case 'restaurant':
-        vCommande = await VCommande.findOneAndDelete({
+        commande = await Commande.deleteOne({
           "$and": [
             { "_id": id },
             { "etat": 0 }
@@ -229,7 +235,7 @@ exports.deleteCommande = async (req, res, next) => {
         })
         break;
       case 'e-kaly':
-        vCommande = await VCommande.findOneAndDelete({
+        commande = await Commande.deleteOne({
           "$and": [
             { "_id": id },
             { "etat": 1 }
@@ -241,14 +247,14 @@ exports.deleteCommande = async (req, res, next) => {
         return res.status(401).json({ message: "Acces non autorisé" });
     }
 
-    if(vCommande == undefined) {
+    if(commande == undefined) {
       console.log("Tsy misy commande")
       return res.status(401).json({ message: "Acces non autorisé" });
     }
 
     return res.status(200).json({
       message: "Commande annulée",
-      data: vCommande
+      // data: vCommande
     });
   } catch(error) {
     console.log(error)
