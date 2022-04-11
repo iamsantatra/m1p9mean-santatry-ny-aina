@@ -44,6 +44,7 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
     this.type = this.tokenStorageService.getUser().type;
     this.commandesService.getCommande();
     console.log(this.commandesService.getCommande())
+    console.log(new Date())
     this.commandesSub = this.commandesService.getCommandeUpdateListener()
       .subscribe((coms: VCommande[]) => {
         this.commandes = coms;

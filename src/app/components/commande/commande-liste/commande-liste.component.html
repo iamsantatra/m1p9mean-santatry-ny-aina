@@ -46,24 +46,24 @@
                         <div class="table-responsive">
                             <table class="table mb-0">
                                 <thead>
-                                    <tr *ngIf="type == 'restaurant'">
-                                      <th>Nom plat</th>
-                                      <th>Prix</th>
-                                      <th>Quantité</th>
-                                      <th>Total</th>
-                                      <th>Action</th>
-                                    </tr>
-                                    <tr *ngIf="type == 'e-kaly'">
-                                      <th>Nom plat</th>
-                                      <th>Restaurant</th>
-                                      <th>Client</th>
-                                      <th>Lieu</th>
-                                      <th>Livreur</th>
-                                      <th>Prix</th>
-                                      <th>Quantité</th>
-                                      <th>Total</th>
-                                      <th>Date</th>
-                                      <th>Action</th>
+                                  <tr *ngIf="type == 'restaurant'">
+                                    <th>Nom plat</th>
+                                    <th>Prix</th>
+                                    <th>Quantité</th>
+                                    <th>Total</th>
+                                    <th>Action</th>
+                                  </tr>
+                                  <tr *ngIf="type == 'e-kaly'">
+                                    <th>Nom plat</th>
+                                    <th>Restaurant</th>
+                                    <th>Client</th>
+                                    <th>Lieu</th>
+                                    <th>Livreur</th>
+                                    <th>Prix</th>
+                                    <th>Quantité</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
                                   </tr>
                                   <tr *ngIf="type == 'livreur'">
                                     <th>Nom plat</th>
@@ -170,7 +170,6 @@
                                   </tr>
                                 </tbody>
                             </table>
-
                         </div>
                         <div  *ngIf="errorMessage" class="row">
                           <div class="col-lg-6">

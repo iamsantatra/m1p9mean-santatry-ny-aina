@@ -175,6 +175,7 @@ exports.listeCommande = async (req, res, next) => {
   try {
     switch(req.userData.type) {
       case 'restaurant':
+        console.log("restaurant")
         listeCommande = await VCommande.find({
           "$or": [
             {etat: 0},
@@ -203,7 +204,7 @@ exports.listeCommande = async (req, res, next) => {
         console.log("Tsy misy type")
         return res.status(401).json({ message: "Acces non autorisé" });
     }
-    // console.log( listeCommande)
+    console.log(listeCommande)
     return res.status(200).json({
       message: "Liste des commandes",
       data: listeCommande

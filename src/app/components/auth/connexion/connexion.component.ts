@@ -37,6 +37,7 @@ export class ConnexionComponent implements OnInit{
   }
 
   onLogin(form: NgForm) {
+
     if (form.invalid) {
       return;
     }
@@ -48,14 +49,17 @@ export class ConnexionComponent implements OnInit{
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.type = this.tokenStorage.getUser().type;
+        this.isLoading = false;
         this.redirection(this.type)
       },
       error: err => {
+        console.log(err)
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
+        this.isLoading = false;
       }
     });
-    this.isLoading = false;
+
   }
 
   redirection(type: string) {

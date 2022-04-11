@@ -28,6 +28,7 @@ export class CommandeService {
   }
 
   getCommande() {
+    console.log(BACKEND_URL + "/listeCommande");
     this.http
       .get<{ message: string; data: any }>(
         BACKEND_URL + "/listeCommande"
@@ -35,7 +36,7 @@ export class CommandeService {
       .pipe(map((vCommandeData) => {
 
         return vCommandeData.data.map((vCommande: any) => {
- console.log(vCommande)
+          console.log(vCommande)
           let commande: Commande = {
             id: vCommande._id,
             plat_id: vCommande.plat_id,
