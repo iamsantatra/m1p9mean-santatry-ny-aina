@@ -102,17 +102,17 @@ exports.updateCommande = async (req, res, next) => {
         let commandeLivreur = await Commande.findOne({ "livreur_id": livreur_id});
         let commandeCorrespondant = await Commande.findOne({ "_id": id});
 
-        if(commandeLivreur != null) {
-          console.log(commandeLivreur.dateLivraison)
-          let dateL = new Date(commandeLivreur.dateLivraison)
-          dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
-          let dateC = new Date(commandeCorrespondant.dateLivraison)
-          dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
-          if(dateL == dateC ) {
-            // console.log("dsids")
-            return res.status(403).json({ message: "Livreur non disponible" });
-          }
-        }
+        // if(commandeLivreur != null) {
+        //   console.log(commandeLivreur.dateLivraison)
+        //   let dateL = new Date(commandeLivreur.dateLivraison)
+        //   dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
+        //   let dateC = new Date(commandeCorrespondant.dateLivraison)
+        //   dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
+        //   if(dateL == dateC ) {
+        //     // console.log("dsids")
+        //     return res.status(403).json({ message: "Livreur non disponible" });
+        //   }
+        // }
         // console.log(commandeLivreur)
         messageSucces = "Commande validée par e-kaly"
         avadika_etat = 2
@@ -177,16 +177,21 @@ exports.listeCommande = async (req, res, next) => {
       case 'restaurant':
         console.log("restaurant")
         listeCommande = await VCommande.find({
-          "$or": [
-            {etat: 0},
-            {etat: 1}
-          ],
-          "$and": [
-            {"commandePlat.restaurant_id": ObjectID(req.userData.restaurant_id)}
+          "$and" : [
+            {
+              "$or": [
+                {etat: 0},
+                {etat: 1}
+              ]
+            } ,
+            {
+              "commandePlat.restaurant_id": ObjectID(req.userData.restaurant_id)
+            }
           ]
         })
         break;
       case 'e-kaly':
+        console.log("e-kaly")
         listeCommande = await VCommande.find({
           "$or": [
             {etat: 0},
@@ -195,6 +200,7 @@ exports.listeCommande = async (req, res, next) => {
         })
         break;
       case 'livreur':
+        console.log("livreur")
         listeCommande = await VCommande.find({
           "etat": 2,
           "livreur_id": ObjectID(req.userData.userId)
