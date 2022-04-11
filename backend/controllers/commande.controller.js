@@ -108,9 +108,15 @@ exports.updateCommande = async (req, res, next) => {
           dateL = dateL.getDate + "/" + dateL.getMonth + "/" + dateL.getDay+", "+dateL.getTime()+":"+dateL.getMinutes+":"+dateL.getSeconds
           let dateC = new Date(commandeCorrespondant.dateLivraison)
           dateC = dateC.getDate + "/" + dateC.getMonth + "/" + dateC.getDay+", "+dateC.getTime()+":"+dateC.getMinutes+":"+dateC.getSeconds
-          if(dateL == dateC && commandeCorrespondant.utilisateur_id !== commandeLivreur.utilisateur_id) {
-            // console.log("dsids")
-            return res.status(403).json({ message: "Livreur non disponible" });
+          console.log(commandeCorrespondant.utilisateur_id)
+          console.log(commandeLivreur.utilisateur_id)
+          console.log(ObjectID(commandeCorrespondant.utilisateur_id) == ObjectID(commandeLivreur.utilisateur_id))
+          if(!commandeCorrespondant.utilisateur_id.equals(commandeLivreur.utilisateur_id)) {
+            console.log("tsy mitovy")
+            if(dateL == dateC) {
+              // console.log("dsids")
+              return res.status(403).json({ message: "Livreur non disponible" });
+            }
           }
         }
         // console.log(commandeLivreur)
