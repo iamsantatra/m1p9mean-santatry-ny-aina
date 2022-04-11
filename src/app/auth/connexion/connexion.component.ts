@@ -45,6 +45,8 @@ export class ConnexionComponent implements OnInit{
         this.type = this.tokenStorage.getUser().type;
         this.redirection(this.type)
       },
+
+
       error: err => {
         this.errorMessage = err.error.message;
         this.isLoginFailed = true;
