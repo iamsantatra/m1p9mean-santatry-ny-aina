@@ -37,6 +37,8 @@ export class CommandeService {
 
         return vCommandeData.data.map((vCommande: any) => {
           console.log(vCommande)
+          let d: Date = new Date(vCommande.dateLivraison)
+          d.setHours(d.getHours() - 3)
           let commande: Commande = {
             id: vCommande._id,
             plat_id: vCommande.plat_id,
@@ -46,7 +48,7 @@ export class CommandeService {
             typeLivraison: vCommande.typeLivraison,
             prixLivraison: vCommande.prixLivraison,
             quantite: vCommande.quantite,
-            dateLivraison: vCommande.dateLivraison
+            dateLivraison: d.toString()
           }
           let plat: Plat = {
             id: vCommande.commandePlat[0]._id,

@@ -93,7 +93,7 @@
                                         <td>{{ commande.plat.prixVente * commande.commande.quantite | currency }}</td>
                                         <td>
                                           <div *ngIf="commande.commande.etat==1" class="button-items">
-                                            <a class="btn btn-outline-secondary" ><i class="mdi mdi-bell-sleep-outline me-2"></i>En attente</a>
+                                            <span class="badge badge-soft-purple">En attente...</span>
                                               <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
                                           </div>
                                           <div *ngIf="commande.commande.etat==0" class="button-items">
@@ -123,7 +123,7 @@
                                       <td>{{  commande.commande.lieu }}</td>
                                       <td>
 
-                                        <select [(ngModel)]="selectedOption" class="form-select" required>
+                                        <select [(ngModel)]="selectedOption"  required>
                                           <option class="w-20" *ngFor="let user of users" [value]="user.id">{{ user.nom }}</option>
                                         </select>
                                       </td>
@@ -133,7 +133,7 @@
                                       <td>{{   commande.commande.dateLivraison  | date: 'medium'}}</td>
                                       <td>
                                         <div *ngIf="commande.commande.etat==0" class="button-items">
-                                          <a class="btn btn-outline-secondary" ><i class="mdi mdi-bell-sleep-outline me-2"></i>En attente</a>
+                                          <span class="badge badge-soft-purple">En attente...</span>
                                             <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
                                         </div>
                                         <div *ngIf="commande.commande.etat==1" class="button-items">
