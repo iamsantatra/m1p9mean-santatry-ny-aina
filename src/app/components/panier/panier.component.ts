@@ -20,7 +20,7 @@ export class PanierComponent implements OnInit {
   items: Item[] = [];
   public sousTotalC! : number;
   public livraison!: number;
-  public errorMessage: string = ""
+  public errorMessage!: string;
   public commandeFailed: boolean = false
   @ViewChildren("subTotalWrap")
   subTotalItems!: QueryList<ElementRef>;
