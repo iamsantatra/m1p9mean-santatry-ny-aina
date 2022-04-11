@@ -9,8 +9,8 @@ import { Item } from './item.entity';
 export class PanierService {
 
   private items: Item[] = [];
-  private itemsUpdated = new Subject<Item[]>();
-  private itemsStatus = new Subject<boolean>();
+  // private itemsUpdated = new Subject<Item[]>();
+  // private itemsStatus = new Subject<boolean>();
 
   constructor() {
   }
@@ -124,15 +124,15 @@ export class PanierService {
     return this.items.findIndex(o => o.plat.id === item.plat.id) > -1;
   }
 
-  getItemsUpdateListener() {
-    // this.loadCart()
-    return this.itemsUpdated.asObservable()
-  }
+  // getItemsUpdateListener() {
+  //   // this.loadCart()
+  //   return this.itemsUpdated.asObservable()
+  // }
 
-  getItemsStatusListener() {
-    // this.loadCart()
-    return this.itemsStatus.asObservable()
-  }
+  // getItemsStatusListener() {
+  //   // this.loadCart()
+  //   return this.itemsStatus.asObservable()
+  // }
 
   addToCart(addedItem: Item) {
     this.items.push(addedItem);
@@ -152,8 +152,8 @@ export class PanierService {
     } */
     this.saveCart();
     // console.log(this.items)
-    this.itemsUpdated.next([...this.items]);
-    this.itemsStatus.next(true);
+    // this.itemsUpdated.next([...this.items]);
+    // this.itemsStatus.next(true);
   }
 
   getItems() {
@@ -162,7 +162,7 @@ export class PanierService {
 
   saveCart(): void {
     localStorage.setItem('cart_items', JSON.stringify(this.items));
-    this.itemsUpdated.next([...this.items]);
+    // this.itemsUpdated.next([...this.items]);
     console.log("load panier "+this.items)
   }
   loadCart(): void {
@@ -173,7 +173,7 @@ export class PanierService {
   clearCart(items: Item[]) {
     this.items = [];
     localStorage.removeItem("cart_items")
-    this.itemsStatus.next(false);
+    // this.itemsStatus.next(false);
   }
 
   removeItem(item: Item) {

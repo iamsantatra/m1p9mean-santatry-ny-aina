@@ -15,7 +15,7 @@ import { PanierService } from './panier.service';
   templateUrl: './panier.component.html',
   styleUrls: ['./panier.component.css']
 })
-export class PanierComponent implements OnInit, OnDestroy {
+export class PanierComponent implements OnInit {
 
   items: Item[] = [];
   public sousTotalC! : number;
@@ -37,11 +37,11 @@ export class PanierComponent implements OnInit, OnDestroy {
 
     this.panierService.loadCart();
     this.items = this.panierService.getItems();
-    this.itemsSub = this.panierService.getItemsUpdateListener()
-      .subscribe((items: Item[]) => {
-        this.items = items;
-        console.log(this.items)
-      });
+    // this.itemsSub = this.panierService.getItemsUpdateListener()
+    //   .subscribe((items: Item[]) => {
+    //     this.items = items;
+    //     console.log(this.items)
+    //   });
   }
 
   //----- calculate total
@@ -79,13 +79,13 @@ export class PanierComponent implements OnInit, OnDestroy {
   clearCart(items: Item[]) {
     // this.items.forEach((item, index) => this.cartService.removeItem(index));
     this.panierService.clearCart(items);
-    this.items = [...this.panierService.getItems()];
+    // this.items = [...this.panierService.getItems()];
   }
 
 
-  ngOnDestroy(): void {
-    this.itemsSub.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   this.itemsSub.unsubscribe();
+  // }
 
   constructor(private panierService: PanierService,
     private currencyPipe: CurrencyPipe,
