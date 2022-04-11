@@ -116,8 +116,8 @@ export class PanierComponent implements OnInit, OnDestroy {
 
   commande(items: Item[], form: NgForm) {
     console.log(form.value)
-    // if(form.invalid)
-      // return;
+    if(form.invalid)
+      return;
     let connecter: boolean = !!this.tokenStorageService.getToken();
     if (connecter) {
       let prixLivraison = 10000
