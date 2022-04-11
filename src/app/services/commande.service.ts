@@ -9,7 +9,7 @@ import { Restaurant } from '../models/restaurant.model';
 import { VCommande } from '../models/vcommande.model';
 import { Utilisateur } from '../models/utilisateur.model';
 
-const BACKEND_URL = environment.apiUrl + "/commande";
+const BACKEND_URL = environment.apiUrl + "commande";
 @Injectable({
   providedIn: 'root'
 })

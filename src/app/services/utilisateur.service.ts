@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Utilisateur } from '../models/utilisateur.model';
 
 
-const BACKEND_URL = environment.apiUrl + "/utilisateur";
+const BACKEND_URL = environment.apiUrl + "utilisateur";
 @Injectable({
   providedIn: 'root'
 })
