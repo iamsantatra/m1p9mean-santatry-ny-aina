@@ -14,6 +14,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use("/", express.static(path.join(__dirname, "angular")))
 mongoose.connect(db.url)
   .then(() => {
     console.log('Connected to database!')
@@ -73,4 +74,7 @@ app.use("/api/utilisateur", utilisateurRoutes);
 app.use("/api/restaurant", restaurantRoutes);
 app.use("/api/plat", platRoutes);
 app.use("/api/commande", commandeRoutes);
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "angular", "index.html"))
+})
 module.exports = app;

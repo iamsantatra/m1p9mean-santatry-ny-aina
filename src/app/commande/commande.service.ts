@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Item } from '../panier/item.entity';
 import { Commande } from './commande.model';
 
-const BACKEND_URL = /*environment.apiUrl + */"commande";
+const BACKEND_URL = environment.apiUrl + "commande";
 @Injectable({
   providedIn: 'root'
 })
