@@ -9,5 +9,6 @@ router.post("/inscription", utilisateurController.inscription)
 router.post("/connexion", utilisateurController.connexion)
 router.get("/confirmation/:confirmationCode", utilisateurController.verification)
 router.get("/listeLivreur/", utilisateurController.listeLivreur)
+// router.get("/verification/", utilisateurController.listeLivreur)
 
 module.exports = router;

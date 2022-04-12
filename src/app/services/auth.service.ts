@@ -83,4 +83,17 @@ export class AuthService {
       // })
     // console.log(this.token)
   }
+
+  confirmation (code: string | null | undefined)  {
+    if(!code) {
+      return;
+    }
+    return this.http.get(BACKEND_URL + "confirmation/" + code )
+  };
+
+  signUp(nom: string, email: string, motDePasse: string) {
+    const authData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse };
+    return this.http
+      .post<{message: string, data: Utilisateur}>(BACKEND_URL + "inscription",  authData);
+  }
 }

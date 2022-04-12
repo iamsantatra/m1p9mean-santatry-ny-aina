@@ -24,6 +24,7 @@ import localeFr from '@angular/common/locales/fr';
 import { CommandeComponent } from './components/commande/commande.component';
 import { CommandeListeComponent } from './components/commande/commande-liste/commande-liste.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { ConfirmationComponent } from './components/auth/inscription/confirmation/confirmation.component';
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -43,6 +44,7 @@ registerLocaleData(localeFr, 'fr');
     CommandeComponent,
     CommandeListeComponent,
     LoadingComponent,
+    ConfirmationComponent,
   ],
   imports: [
     BrowserModule,

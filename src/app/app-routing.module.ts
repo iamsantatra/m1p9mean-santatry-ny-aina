@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AccueilComponent } from "./components/accueil/accueil.component";
 import { ConnexionComponent } from "./components/auth/connexion/connexion.component";
+import { ConfirmationComponent } from "./components/auth/inscription/confirmation/confirmation.component";
+import { InscriptionComponent } from "./components/auth/inscription/inscription.component";
 import { CommandeListeComponent } from "./components/commande/commande-liste/commande-liste.component";
 import { CommandeComponent } from "./components/commande/commande.component";
 import { LoadingComponent } from "./components/loading/loading.component";
@@ -21,6 +23,8 @@ const routes: Routes = [
   // { path: "commander/:commandeId", component: CommandeListeComponent },
   { path: "panier", component: PanierComponent },
   { path: "commande", component: CommandeListeComponent },
+  { path: "confirmation/:confirmation", component: ConfirmationComponent },
+  { path: "inscription", component: InscriptionComponent },
   // { path: "loading", component: LoadingComponent },
   //Wild Card Route for 404 request
   { path: '**', pathMatch: 'full',

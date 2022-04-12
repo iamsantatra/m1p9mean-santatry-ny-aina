@@ -1,9 +1,9 @@
 export interface Utilisateur {
-  id: string;
+  id?: string;
   nom: string;
   email: string;
   motDePasse: string;
-  type: string;
-  status: string;
-  confirmationCode: string;
+  type?: string;
+  status?: string;
+  confirmationCode?: string;
 }
