@@ -14,6 +14,7 @@ export class RestaurantListeComponent implements OnInit, OnDestroy{
 
   restaurants: Restaurant[] = [];
   private restosSub: Subscription = new Subscription;
+  public cle: string | null | undefined;
 
   constructor(public restosService: RestaurantService) { }
 
@@ -28,4 +29,11 @@ export class RestaurantListeComponent implements OnInit, OnDestroy{
     this.restosSub.unsubscribe();
   }
 
+    search(): void {
+      this.restosService.getRestaurantRecherche(this.cle)
+      this.restosSub = this.restosService.getRestaurantUpdateListener()
+      .subscribe((restos: Restaurant[]) => {
+        this.restaurants = restos;
+      })
+  }
 }

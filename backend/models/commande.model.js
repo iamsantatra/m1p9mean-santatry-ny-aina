@@ -3,7 +3,6 @@ const uniqueValidator = require("mongoose-unique-validator")
 var Schema = mongoose.Schema;
 
 const commandeSchema = mongoose.Schema({
-
   plat_id: {
     type: Schema.Types.ObjectId, ref: 'Plat',
     required: true

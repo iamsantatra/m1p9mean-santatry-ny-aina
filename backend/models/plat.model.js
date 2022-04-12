@@ -3,7 +3,6 @@ const uniqueValidator = require("mongoose-unique-validator")
 var Schema = mongoose.Schema;
 
 const platSchema = mongoose.Schema({
-
   nomPlat: {
     type: String,
     required: true

@@ -35,6 +35,29 @@ export class RestaurantService {
       });
   }
 
+  getRestaurantRecherche(cle: string | undefined | null) {
+    // const dataR: any = {cle: cle}
+    return this.http
+      .get<{ message: string; data: any }>(
+        BACKEND_URL + "/recherche/" + cle
+      ).pipe(map((restoData) => {
+        return restoData.data.map((restaurant: { _id: string; nom: string; image: string; lieu: string; }) => {
+          return {
+            id: restaurant._id,
+            nom: restaurant.nom,
+            image: restaurant.image,
+            lieu: restaurant.lieu
+          };
+        });
+      }))
+      .subscribe(transformedResto => {
+        this.restaurants = transformedResto;
+        this.restaurantsUpdated.next([...this.restaurants]);
+      });
+
+  }
+
+
   getRestaurantUpdateListener() {
     return this.restaurantsUpdated.asObservable();
   }

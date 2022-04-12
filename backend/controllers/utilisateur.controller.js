@@ -7,6 +7,13 @@ const nodemailer = require("../configs/nodemailer.config");
 exports.inscription = async (req, res, next) => {
   let hash = await bcrypt.hash(req.body.motDePasse, 10)
     try {
+      let userTest = await Utilisateur.findOne({ "email" : req.body.email})
+      if(userTest != undefined) {
+        return res.status(403).json({
+          message: "Email déjà enregistré",
+          // data: result
+        });
+      }
       const token = jwt.sign(
         { email: req.body.email },
         "token_activation"
@@ -26,7 +33,7 @@ exports.inscription = async (req, res, next) => {
         utilisateur.confirmationCode
       );
       return res.status(201).json({
-        message: "L'utilisateur a été enregistré avec succès ! Merci de consulter vos emails",
+        message: "L'utilisateur a été enregistré avec succès ! Merci de vouloir consulter vos emails",
         data: result
       });
     } catch(err) {
@@ -60,7 +67,7 @@ exports.connexion = async (req, res, next) => {
             message: "Compte en attente de validation",
           });
         }
-        // console.log(fetchedUser)
+        console.log(fetchedUser)
         const token = jwt.sign(
           { userId: fetchedUser._id, type: fetchedUser.type, restaurant_id: fetchedUser.restaurant_id },
           "secret_this_should_be_longer",
@@ -82,6 +89,7 @@ exports.connexion = async (req, res, next) => {
 
 exports.verification =  async (req, res, next) => {
   const filter = { confirmationCode: req.params.confirmationCode }
+  console.log("verification")
   let user = Utilisateur.findOne({
     filter
   })
@@ -101,7 +109,8 @@ exports.verification =  async (req, res, next) => {
     // });
   } catch(e) {
     console.log(e);
-    return res.status(500).json({ message: e }); }
+    return res.status(500).json({ message: e });
+  }
 }
 
 exports.listeLivreur = async (req, res, next) => {

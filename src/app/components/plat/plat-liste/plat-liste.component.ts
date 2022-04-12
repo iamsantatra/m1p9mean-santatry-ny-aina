@@ -16,6 +16,7 @@ export class PlatListeComponent implements OnInit, OnDestroy {
 
   private platsSub: Subscription = new Subscription;
   private restoId: string | null | undefined;
+  public cle: string | null | undefined = undefined;
 
   constructor(
     public platsService: PlatService,
