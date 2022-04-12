@@ -15,6 +15,7 @@ export class RestaurantListeComponent implements OnInit, OnDestroy{
   restaurants: Restaurant[] = [];
   private restosSub: Subscription = new Subscription;
   public cle: string | null | undefined;
+  public isLoading: boolean = false;
 
   constructor(public restosService: RestaurantService) { }
 
@@ -29,11 +30,16 @@ export class RestaurantListeComponent implements OnInit, OnDestroy{
     this.restosSub.unsubscribe();
   }
 
-    search(): void {
-      this.restosService.getRestaurantRecherche(this.cle)
-      this.restosSub = this.restosService.getRestaurantUpdateListener()
-      .subscribe((restos: Restaurant[]) => {
-        this.restaurants = restos;
-      })
+  search(): void {
+    this.isLoading = true
+    if(this.cle == "") {
+      this.restosService.getRestaurant();
+    }
+    this.restosService.getRestaurantRecherche(this.cle)
+    this.restosSub = this.restosService.getRestaurantUpdateListener()
+    .subscribe((restos: Restaurant[]) => {
+      this.restaurants = restos;
+    })
+    this.isLoading = false
   }
 }

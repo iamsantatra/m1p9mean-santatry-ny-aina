@@ -6,6 +6,9 @@ import { ConfirmationComponent } from "./components/auth/inscription/confirmatio
 import { InscriptionComponent } from "./components/auth/inscription/inscription.component";
 import { CommandeListeComponent } from "./components/commande/commande-liste/commande-liste.component";
 import { CommandeComponent } from "./components/commande/commande.component";
+import { LivreurListeComponent } from "./components/livreur/livreur-liste/livreur-liste.component";
+import { LivreurUpdateComponent } from './components/livreur/livreur-udpate/livreur-update.component';
+import { LivreurComponent } from "./components/livreur/livreur.component";
 import { LoadingComponent } from "./components/loading/loading.component";
 import { PagenotfoundComponent } from "./components/pagenotfound/pagenotfound.component";
 import { PanierComponent } from "./components/panier/panier.component";
@@ -25,6 +28,8 @@ const routes: Routes = [
   { path: "commande", component: CommandeListeComponent },
   { path: "confirmation/:confirmation", component: ConfirmationComponent },
   { path: "inscription", component: InscriptionComponent },
+  { path: "livreur", component: LivreurListeComponent },
+  { path: "update-livreur/:id/:nom/:email", component: LivreurUpdateComponent },
   // { path: "loading", component: LoadingComponent },
   //Wild Card Route for 404 request
   { path: '**', pathMatch: 'full',

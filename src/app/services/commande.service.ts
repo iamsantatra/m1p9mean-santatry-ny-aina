@@ -104,6 +104,71 @@ export class CommandeService {
       .put<{message: string}>(BACKEND_URL + "/updateCommande", validation)
   }
 
+  getCommandeRecherche(type: string | undefined | null) {
+    // const dataR: any = {type: type}
+    return this.http
+      .get<{ message: string; data: any }>(
+        BACKEND_URL + "/recherche/" + type
+      ).pipe(map((vCommandeData) => {
+        return vCommandeData.data.map((vCommande: any) => {
+        let d: Date = new Date(vCommande.dateLivraison)
+        d.setHours(d.getHours() - 3)
+        let commande: Commande = {
+          id: vCommande._id,
+          plat_id: vCommande.plat_id,
+          utilisateur_id: vCommande.utilisateur_id,
+          etat: vCommande.etat,
+          lieu: vCommande.lieu,
+          typeLivraison: vCommande.typeLivraison,
+          prixLivraison: vCommande.prixLivraison,
+          quantite: vCommande.quantite,
+          dateLivraison: d.toString()
+        }
+        let plat: Plat = {
+          id: vCommande.commandePlat[0]._id,
+          nomPlat: vCommande.commandePlat[0].nomPlat,
+          description: vCommande.commandePlat[0].description,
+          categorie: vCommande.commandePlat[0].categorie,
+          prixVente: vCommande.commandePlat[0].prixVente,
+          prixAchat: vCommande.commandePlat[0].prixAchat,
+          etat: vCommande.commandePlat[0].etat,
+          image: vCommande.commandePlat[0].image,
+          restaurant_id: vCommande.commandePlat[0].restaurant_id,
+        }
+        // console.log(vCommande.commandePlat[0])
+
+        let restaurant: Restaurant = {
+          id: vCommande.commandeRestaurant[0]._id,
+          nom: vCommande.commandeRestaurant[0].nom,
+          image: vCommande.commandeRestaurant[0].image,
+          lieu: vCommande.commandeRestaurant[0].lieu
+        }
+
+        let utilisateur: Utilisateur = {
+          id: vCommande.commandeUtilisateur[0]._id,
+          nom: vCommande.commandeUtilisateur[0].nom,
+          email: vCommande.commandeUtilisateur[0].email,
+          motDePasse: vCommande.commandeUtilisateur[0].motDePasse,
+          type: vCommande.commandeUtilisateur[0].type,
+          status: vCommande.commandeUtilisateur[0].status,
+          confirmationCode: vCommande.commandeUtilisateur[0].confirmationCode
+        }
+
+        return {
+          commande: commande,
+          plat: plat,
+          restaurant: restaurant,
+          utilisateur: utilisateur
+        };
+      });
+    }))
+    .subscribe(transformedComs => {
+      this.commandes = transformedComs;
+      this.commandesUpdated.next([...this.commandes]);
+    });
+  }
+
+
   annuler(idAzo: string) {
     console.log(idAzo)
     return this.http

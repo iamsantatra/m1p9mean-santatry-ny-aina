@@ -23,6 +23,7 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
   public users: Utilisateur[] = [];
   public usersSub: Subscription = new Subscription;
   public selectedOption!: string ;
+  etat: string | null | undefined;
 
   constructor(
     public commandesService: CommandeService,
@@ -62,6 +63,14 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.commandesSub.unsubscribe();
+  }
+
+  search() {
+    this.commandesService.getCommandeRecherche(this.etat)
+    this.commandesSub = this.commandesService.getCommandeUpdateListener()
+    .subscribe((coms: VCommande[]) => {
+      this.commandes = coms;
+    })
   }
 
   commander(id: string | null | undefined) {

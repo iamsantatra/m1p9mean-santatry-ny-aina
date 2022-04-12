@@ -1,0 +1,81 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="page-content-tab">
+      <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title"></h4>
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+
+
+        <div class="row">
+          <div class="col-lg-4">
+
+          </div><!--end row-->
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Modification</h4>
+            </div><!--end card-header-->
+                <div class="card-body">
+                      <form (submit)="update(signupForm)"  #signupForm="ngForm" class="my-4" action="/" >
+                        <div class="form-group mb-2">
+                          <label class="form-label" for="nom">Nom</label>
+                          <input type="hidden" ngModel="{{ id }}"  name="id" required>
+                          <input type="nom" ngModel="{{ nom }}" [ngClass]="{ 'is-invalid': signupForm.submitted && nomInput.invalid }"  class="form-control" id="nom" name="nom" #nomInput="ngModel" placeholder="Entrer le nom du livreur" required nom>
+                          <div class="invalid-feedback" *ngIf="nomInput.invalid">Veuillez saisir un nom valide</div>
+                        </div><!--end form-group-->
+                          <div class="form-group mb-2">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" ngModel="{{ email }}" [ngClass]="{ 'is-invalid': signupForm.submitted && emailInput.invalid }"  class="form-control" id="email" name="email" #emailInput="ngModel" placeholder="Entrer l'e-mail" required email>
+                            <div class="invalid-feedback" *ngIf="emailInput.invalid">Veuillez saisir une adresse e-mail valide</div>
+                          </div><!--end form-group-->
+
+                          <div class="form-group">
+                              <label class="form-label" for="motDePasse">Mot de passe</label>
+                              <input type="password" minlength="8" ngModel [ngClass]="{ 'is-invalid': signupForm.submitted && passwordInput.invalid }" class="form-control" name="motDePasse" #passwordInput="ngModel" id="motDePasse" placeholder="Entrer le mot de passe">
+                              <div class="invalid-feedback" *ngIf="passwordInput.invalid">Veuillez saisir un mot de passe valide</div>
+                          </div><!--end form-group-->
+
+                          <div class="form-group mb-0 row">
+                              <div class="col-12">
+                                  <div class="d-grid mt-3">
+                                      <button class="btn btn-primary" type="submit" [disabled]="isLoading">Modifier
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span><span class="sr-only">Chargement...</span>
+                                      </button>
+                                  </div>
+                              </div><!--end col-->
+                          </div> <!--end form-group-->
+                      </form><!--end form-->
+
+                      <div *ngIf="isModifyFailed" class="alert alert-danger alert-dismissible fade show border-0 b-round" role="alert">
+                        {{ errorMessage }}.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+          </div><!--end row-->
+          <div class="col-lg-4">
+
+          </div><!--end row-->
+        </div>
+
+        </div>
+      </div><!-- container -->
+
+      <!--Start Footer-->
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+    <!-- end Footer -->
+    <!--end footer-->
+    </div>
+<!-- end page content -->
+</div>
+<!-- end page-wrapper -->

@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar-custom">
         <ul class="list-unstyled topbar-nav float-end mb-0">
-          <li class="notification-list">
+          <li  *ngIf="type == 'client' || type ==''"  class="notification-list">
             <a class="nav-link arrow-none nav-icon" href="panier" role="button">
                 <i class="ti ti-shopping-cart"></i>
                 <!-- <span *ngIf="status" class="alert-badge"></span> -->
@@ -25,9 +25,13 @@
           <li class="notification-list"  *ngIf="isLoggedIn">
             <a class="nav-link nav-user" role="button" aria-expanded="false">
                 <div class="d-flex align-items-center">
-                    <div>
-                        <span class="d-none d-md-block fw-semibold font-12">{{  nom  }}</span>
-                    </div>
+                  <span class="thumb-sm justify-content-center d-flex align-items-center bg-primary rounded-circle me-2">
+                    <i class="fas fa-user text-white"></i>
+                  </span>
+                  <div>
+                    <small *ngIf="type != 'client' && type !=''" class="d-none d-md-block font-11">{{ type }}</small>
+                    <span class="d-none d-md-block fw-semibold font-12">{{  nom  }}</span>
+                  </div>
                 </div>
             </a>
         </li>
@@ -58,20 +62,50 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
+
+
+                  <!-- <li class="nav-item dropdown parent-menu-item">
+                    <a *ngIf="type == 'e-kaly'" class="nav-link" href="tableau-de-bord" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <span><i class="ti ti-chart-infographic menu-icon"></i>Tableau de bord</span>
+                    </a>
+                  </li> -->
+
                     <li class="nav-item dropdown parent-menu-item">
+                      <a *ngIf="type == 'e-kaly' || type =='restaurant' || type =='livreur'" class="nav-link" href="commande" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-stack menu-icon"></i>Commande</span>
+                      </a>
+                    </li><!--end nav-item-->
+                    <li class="nav-item dropdown parent-menu-item">
+                      <a *ngIf="type == 'e-kaly' " class="nav-link" href="" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-building-store menu-icon"></i>Restaurant</span>
+                      </a>
+                    </li><!--end nav-item-->
+                    <li class="nav-item dropdown parent-menu-item">
+                      <a *ngIf="type == 'restaurant' " class="nav-link" href="" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-apple menu-icon"></i>Repas</span>
+                      </a>
+                    </li><!--end nav-item-->
+
+                    <li class="nav-item dropdown parent-menu-item">
+                      <a *ngIf="type == 'e-kaly'" class="nav-link" href="livreur" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                          <span><i class="ti ti-truck-delivery menu-icon"></i>Livreur</span>
+                      </a>
+                    </li><!--end nav-item-->
+
+                    <li *ngIf="type == 'client' || type ==''" class="nav-item dropdown parent-menu-item">
                         <a class="nav-link" href="accueil" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
                             <span><i class="ti ti-smart-home menu-icon"></i>Accueil</span>
                         </a>
                     </li><!--end nav-item-->
 
                     <li class="nav-item dropdown parent-menu-item">
-                      <a class="nav-link" href="restaurant" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                      <a *ngIf="type == 'client' || type ==''" class="nav-link" href="restaurant" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
                           <span><i class="ti ti-truck-delivery menu-icon"></i>Commandez</span>
                       </a>
                     </li><!--end nav-item-->
 
                     <li class="nav-item dropdown parent-menu-item">
-                      <a class="nav-link" href="" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
+                      <a *ngIf="type == 'client' || type ==''" class="nav-link" href="" id="navbarDashboards" aria-haspopup="true" aria-expanded="false" data-display="static">
                           <span><i class="ti ti-accessible menu-icon"></i>À propos</span>
                       </a>
                     </li><!--end nav-item-->

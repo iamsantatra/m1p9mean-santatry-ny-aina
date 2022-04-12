@@ -12,7 +12,7 @@ import { TokenStorageService } from "../../services/token-storage.service";
 })
 export class HeaderComponent implements OnInit {
 
-  private type: string = ''
+  public type: string = ''
   isLoggedIn = false;
   showLivreurBoard = false;
   showRestaurantBoard = false;

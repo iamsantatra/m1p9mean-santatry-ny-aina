@@ -39,6 +39,17 @@
                         <div class="row align-items-center">
                             <div class="col">
                                 <h4 class="card-title">Commandes</h4>
+                                <div class="col-lg-3">
+                                  <div *ngIf="type == 'e-kaly'" class="input-group">
+                                    <select [(ngModel)]="etat"  required>
+                                      <option class="w-20"  [value]=0>Commandé</option>
+                                      <option class="w-20"  [value]=1>Validé par le restaurant</option>
+                                      <option class="w-20"  [value]=2>Validé par E-Kaly</option>
+                                      <option class="w-20"  [value]=3>Livré</option>
+                                    </select>
+                                    <button type="button"  (click)="search()"  class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
+                                  </div>
+                                </div>
                             </div><!--end col-->
                         </div>  <!--end row-->
                       </div><!--end card-header-->
@@ -141,6 +152,14 @@
                                             <button type="submit" class="btn btn-outline-success"><i class="mdi mdi-send me-2"></i>Valider</button>
                                           </form>
                                             <button (click)="annuler(commande.commande.id)" class="btn btn-outline-danger"><i class="mdi mdi-trash-can-outline me-2"></i>Annuler</button>
+                                        </div>
+                                        <div *ngIf="commande.commande.etat==2" class="button-items">
+                                          <span class="badge badge-soft-secondary">En attente de livraison...</span>
+                                            <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
+                                        </div>
+                                        <div *ngIf="commande.commande.etat==3" class="button-items">
+                                          <span class="badge badge-soft-success">Livré</span>
+                                            <!-- <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button> -->
                                         </div>
                                     </td>
                                   </tr>

@@ -44,6 +44,32 @@ export class PlatService {
       });
   }
 
+  getRecherchePlat(restoId: string | null | undefined, cle: string | null | undefined) {
+    this.http
+      .get<{ message: string; data: any }>(
+        BACKEND_URL + "/recherche/" + restoId + "/" + cle
+      )
+      .pipe(map((platData) => {
+        return platData.data.map((plat: any) => {
+          return {
+            id: plat._id,
+            nomPlat: plat.nomPlat,
+            description: plat.description,
+            categorie: plat.categorie,
+            prixVente: plat.prixVente,
+            prixAchat: plat.prixAchat,
+            etat: plat.etat,
+            image: plat.image,
+            restaurant_id: plat.restaurant_id,
+          };
+        });
+      }))
+      .subscribe(transformedResto => {
+        this.plats = transformedResto;
+        this.platsUpdated.next([...this.plats]);
+      });
+  }
+
   getDetailPlat(platId: string | null | undefined) {
     this.http
       .get<{ message: string; data: any }>(

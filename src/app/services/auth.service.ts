@@ -96,4 +96,10 @@ export class AuthService {
     return this.http
       .post<{message: string, data: Utilisateur}>(BACKEND_URL + "inscription",  authData);
   }
+
+  ajout(nom: string, email: string, motDePasse: string, type: string) {
+    const userData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse, type: type };
+    return this.http
+      .post<{message: string, data: Utilisateur}>(BACKEND_URL + "ajout",  userData);
+  }
 }

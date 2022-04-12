@@ -38,7 +38,30 @@ export class UtilisateurService {
       });
   }
 
+
+
   getUtilisateursUpdateListener() {
     return this.utilisateursUpdated.asObservable();
+  }
+
+  ajout(nom: string, email: string, motDePasse: string, type: string) {
+    // console.log("test")
+    const userData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse, type: type };
+    console.log(BACKEND_URL + "/ajout")
+    return this.http
+      .post<{message: string, data: Utilisateur}>(BACKEND_URL + "/ajout",  userData);
+  }
+
+  supprimer(userId: string | undefined) {
+    console.log(BACKEND_URL + "/supprimer")
+    return this.http
+      .delete<{message: string}>(BACKEND_URL + "/supprimer/" + userId);
+  }
+
+  update(userId: string | null, nom: string, email: string, motDePasse: string) {
+    // console.log(nom)
+    const userData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse, type: "livreur"};
+    return this.http
+      .put<{message: string}>(BACKEND_URL + "/update/" + userId, userData);
   }
 }

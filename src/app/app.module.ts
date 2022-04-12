@@ -25,6 +25,9 @@ import { CommandeComponent } from './components/commande/commande.component';
 import { CommandeListeComponent } from './components/commande/commande-liste/commande-liste.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ConfirmationComponent } from './components/auth/inscription/confirmation/confirmation.component';
+import { LivreurComponent } from './components/livreur/livreur.component';
+import { LivreurListeComponent } from './components/livreur/livreur-liste/livreur-liste.component';
+import { LivreurUpdateComponent } from './components/livreur/livreur-udpate/livreur-update.component';
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -45,6 +48,9 @@ registerLocaleData(localeFr, 'fr');
     CommandeListeComponent,
     LoadingComponent,
     ConfirmationComponent,
+    LivreurComponent,
+    LivreurListeComponent,
+    LivreurUpdateComponent,
   ],
   imports: [
     BrowserModule,

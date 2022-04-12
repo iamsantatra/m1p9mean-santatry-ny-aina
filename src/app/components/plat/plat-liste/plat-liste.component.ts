@@ -42,4 +42,14 @@ export class PlatListeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.platsSub.unsubscribe();
   }
+  search() {
+    if(this.cle == "") {
+      this.platsService.getPlat(this.route.snapshot.paramMap.get('restoId'));
+    }
+    this.platsService.getRecherchePlat(this.route.snapshot.paramMap.get('restoId'), this.cle)
+    this.platsSub = this.platsService.getPlatUpdateListener()
+    .subscribe((coms: Plat[]) => {
+      this.plats = coms;
+    })
+  }
 }

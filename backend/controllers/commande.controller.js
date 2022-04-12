@@ -277,3 +277,28 @@ exports.deleteCommande = async (req, res, next) => {
     });
   }
 };
+
+exports.rechercheCommande = async (req, res, next) => {
+  try {
+    // let regex = new RegExp(["^", req.body.cle$, "$"].join(""), "i");
+    console.log(req.params.etat)
+    let etat = parseInt(req.params.etat);
+    let condition = {"etat": "A"}
+    console.log(condition)
+    let listeCommande = await VCommande.find(
+      {"etat": req.params.etat}
+    );
+    console.log("----------------------")
+    console.log(listeCommande)
+    return res.status(200).json({
+      message: "Liste des restaurants avec recherche",
+      data: listeCommande
+    });
+  } catch(err) {
+    console.log(err)
+    return res.status(500).json({
+      message: "Une erreur s'est produite",
+      error: err
+    });
+  };
+};

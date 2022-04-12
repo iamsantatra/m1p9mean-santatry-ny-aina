@@ -52,3 +52,41 @@ exports.detailPlat = async (req, res, next) => {
     });
   };
 };
+
+exports.recherchePlat = async (req, res, next) => {
+  try {
+    // let regex = new RegExp(["^", req.body.cle$, "$"].join(""), "i");
+    let restaurantInfo = await Restaurant.findOne({
+      _id: ObjectID(req.params.restaurant_id)
+    })
+    if(restaurantInfo == null) {
+      return res.status(404).json({
+        message: "Restaurant inexistant"
+      });
+    }
+    let listePlat = await Plat.find({
+      "$and": [
+      {
+        "$or": [
+          {nomPlat:{$regex: new RegExp(req.params.cle,"i")}},
+          {description:{$regex: new RegExp(req.params.cle,"i")}},
+          {categorie:{$regex: new RegExp(req.params.cle,"i")}},
+        ]
+      },
+      {
+        "restaurant_id": req.params.restaurant_id
+      }
+      ]
+    });
+    return res.status(200).json({
+      message: "Liste des plats avec recherche",
+      data: listePlat
+    });
+  } catch(err) {
+    console.log(err)
+    return res.status(500).json({
+      message: "Une erreur s'est produite",
+      error: err
+    });
+  };
+};

@@ -11,12 +11,12 @@
                 <div class="col-sm-12">
                     <div class="page-title-box">
                         <h4 class="page-title">Plat</h4>
-                        <!-- <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="input-group">
                             <input type="text" [(ngModel)]="cle" id="example-input1-group2" name="example-input1-group2" class="form-control form-control-sm" placeholder="Recherche">
                             <button type="button"  (click)="search()"  class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
                           </div>
-                        </div> -->
+                        </div>
                     </div><!--end page-title-box-->
                 </div><!--end col-->
             </div>
@@ -25,6 +25,9 @@
                 <div class="col-md-3" *ngFor="let plat of plats; index as i">
                     <div class="card">
                         <div class="card-body">
+                            <div *ngIf="plat.etat==0" class="ribbon1 rib1-danger">
+                              <span class="text-white text-center rib1-danger">Epuisé</span>
+                            </div>
                             <img src="{{ plat.image }}" alt="{{ plat.nomPlat }}" class="d-block mx-auto my-4" height="150">
                             <div class="d-flex justify-content-between align-items-center my-4">
                               <div>
