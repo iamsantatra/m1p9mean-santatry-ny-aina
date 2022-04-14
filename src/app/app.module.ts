@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,11 +28,17 @@ import { ConfirmationComponent } from './components/auth/inscription/confirmatio
 import { LivreurComponent } from './components/livreur/livreur.component';
 import { LivreurListeComponent } from './components/livreur/livreur-liste/livreur-liste.component';
 import { LivreurUpdateComponent } from './components/livreur/livreur-udpate/livreur-update.component';
+import { TableauDeBordComponent } from './components/tableau-de-bord/tableau-de-bord.component';
+import { RestaurantGestionComponent } from './components/restaurant/restaurant-gestion/restaurant-gestion.component';
+import { RestaurantUpdateComponent } from './components/restaurant/restaurant-update/restaurant-update.component';
+import { PlatGestionComponent } from './components/plat/plat-gestion/plat-gestion.component';
+import { PlatUpdateComponent } from './components/plat/plat-update/plat-update.component';
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
     AppComponent,
+
     ConnexionComponent,
     InscriptionComponent,
     HeaderComponent,
@@ -51,6 +57,11 @@ registerLocaleData(localeFr, 'fr');
     LivreurComponent,
     LivreurListeComponent,
     LivreurUpdateComponent,
+    TableauDeBordComponent,
+    RestaurantGestionComponent,
+    RestaurantUpdateComponent,
+    PlatGestionComponent,
+    PlatUpdateComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +83,7 @@ registerLocaleData(localeFr, 'fr');
     CurrencyPipe,
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

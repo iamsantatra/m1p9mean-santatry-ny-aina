@@ -28,7 +28,8 @@
                             <div *ngIf="plat.etat==0" class="ribbon1 rib1-danger">
                               <span class="text-white text-center rib1-danger">Epuisé</span>
                             </div>
-                            <img src="{{ plat.image }}" alt="{{ plat.nomPlat }}" class="d-block mx-auto my-4" height="150">
+                            <img *ngIf="plat.image != undefined" src="{{ plat.image }}" alt="{{ plat.nomPlat }}" class="d-block mx-auto my-4" height="150">
+                            <img *ngIf="plat.image == undefined" src="assets/images/food.jpg" alt="{{ plat.nomPlat }}" class="d-block mx-auto my-4" height="150">
                             <div class="d-flex justify-content-between align-items-center my-4">
                               <div>
                                 <p class="text-muted mb-2">{{ plat.categorie }}</p>

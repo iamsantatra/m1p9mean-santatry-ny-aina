@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Commande } from 'src/app/models/commande.model';
 import { Utilisateur } from 'src/app/models/utilisateur.model';
 import { VCommande } from 'src/app/models/vcommande.model';
+import { Vbenefice } from 'src/app/models/vbenefice.model';
 import { CommandeService } from 'src/app/services/commande.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
@@ -18,6 +19,8 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
 
   public commandes: VCommande[] = [];
   public commandesSub: Subscription = new Subscription;
+  public benefices: Vbenefice[] = [];
+  public beneficeSub: Subscription = new Subscription;
   public type!: string;
   errorMessage: string = "";
   public users: Utilisateur[] = [];
@@ -30,7 +33,8 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
     public tokenStorageService: TokenStorageService,
     public route: ActivatedRoute,
     public redirect: Router,
-    public userService: UtilisateurService) { }
+    public userService: UtilisateurService,
+    ) { }
 
   ngOnInit(){
     // this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -49,14 +53,20 @@ export class CommandeListeComponent implements OnInit, OnDestroy {
     this.commandesSub = this.commandesService.getCommandeUpdateListener()
       .subscribe((coms: VCommande[]) => {
         this.commandes = coms;
+      })
+    this.userService.getLivreur()
+    this.usersSub = this.userService.getUtilisateursUpdateListener()
+    .subscribe((users: Utilisateur[]) => {
+      this.users = users;
+      console.log(users)
+    })
 
-      })
-      this.userService.getLivreur()
-      this.usersSub = this.userService.getUtilisateursUpdateListener()
-      .subscribe((users: Utilisateur[]) => {
-        this.users = users;
-        console.log(users)
-      })
+    this.commandesService.getBeneficeResto()
+    this.beneficeSub = this.commandesService.getBeneficeUpdateListener()
+    .subscribe((benefices: Vbenefice[]) => {
+      this.benefices = benefices;
+      console.log(benefices)
+    })
 
     // console.log(this.tokenStorageService.getUser());
 

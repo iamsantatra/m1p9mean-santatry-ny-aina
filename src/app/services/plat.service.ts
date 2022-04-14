@@ -101,4 +101,48 @@ export class PlatService {
   getDetailPlatUpdateListener() {
     return this.detailPlatUpdated.asObservable();
   }
+
+  ajout(nomPlat: string,description: string, categorie: string, prixAchat: number, prixVente: number, restaurant_id: string, image: File) {
+    console.log(nomPlat)
+    let formData: any = new FormData();
+    formData.append("nomPlat", nomPlat)
+    formData.append("description", description)
+    formData.append("categorie", categorie)
+    formData.append("prixAchat", prixAchat)
+    formData.append("prixVente", prixVente)
+    formData.append("restaurant_id", restaurant_id)
+    formData.append("avatar", image)
+    // console.log(formData)
+    return this.http
+      .post<{message: string, data: Plat}>(BACKEND_URL + "/ajout",  formData, {
+        reportProgress: true,
+        observe: 'events',
+      });
+  }
+
+  supprimer(id: string | undefined) {
+    // console.log(BACKEND_URL + "/supprimer")
+    return this.http
+      .delete<{message: string}>(BACKEND_URL + "/supprimer/" + id);
+  }
+
+  update(id: string, nomPlat: string,description: string, categorie: string, prixAchat: number, prixVente: number, restaurant_id: string,avatar: File, etat: string) {
+    console.log("tonga")
+    console.log("avatar", avatar)
+    let formData: any = new FormData();
+    formData.append("nomPlat", nomPlat)
+    formData.append("description", description)
+    formData.append("categorie", categorie)
+    formData.append("prixAchat", prixAchat)
+    formData.append("prixVente", prixVente)
+    formData.append("restaurant_id", restaurant_id)
+    formData.append("avatar", avatar)
+    formData.append("etat", etat)
+    // console.log(formData)
+    return this.http
+      .put<{message: string, data: Plat}>(BACKEND_URL + "/update/" + id, formData, {
+        reportProgress: true,
+        observe: 'events',
+      });
+  }
 }

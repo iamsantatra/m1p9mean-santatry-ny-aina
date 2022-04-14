@@ -27,7 +27,7 @@ export class ConnexionComponent implements OnInit{
   ngOnInit() {
     setTimeout(()=>{
       this.loader = false;
-  }, 1000);
+    }, 1000);
     // console.log(this.tokenStorage.getToken())
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
@@ -69,7 +69,7 @@ export class ConnexionComponent implements OnInit{
         this.router.navigate(["/restaurant"]);
         break;
       case 'e-kaly':
-        this.router.navigate(["/commande"]);
+        this.router.navigate(["/tableau-de-bord"]);
         break;
       case 'livreur':
         this.router.navigate(["/commande"]);

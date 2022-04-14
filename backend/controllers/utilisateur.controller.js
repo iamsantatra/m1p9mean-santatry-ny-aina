@@ -141,16 +141,38 @@ exports.ajout = async (req, res, next) => {
           // data: result
         });
       }
-      const token = jwt.sign(
-        { email: req.body.email },
-        "token_activation"
-      );
-      const utilisateur = new Utilisateur({
-        nom: req.body.nom,
-        motDePasse: hash,
-        email: req.body.email,
-        type: req.body.type
-      })
+      console.log("restaurant_id ",req.body.restaurant_id)
+
+      if(req.body.restaurant_id != '')  {
+        console.log("misy")
+        let restoId = ObjectID(req.body.restaurant_id)
+        let restoTest = await Utilisateur.findOne({ "restaurant_id" : restoId})
+
+        if(restoTest != undefined) {
+          return res.status(403).json({
+            message: "Restaurant inexistant"
+            // data: result
+          });
+        }
+        utilisateur = new Utilisateur({
+          nom: req.body.nom,
+          motDePasse: hash,
+          email: req.body.email,
+          type: req.body.type,
+          restaurant_id: restoId,
+          status: "active"
+        })
+      } else {
+        console.log("tsy misy")
+        utilisateur = new Utilisateur({
+          nom: req.body.nom,
+          motDePasse: hash,
+          email: req.body.email,
+          type: req.body.type,
+          status: "active"
+        })
+      }
+      console.log(utilisateur)
       let result = await utilisateur.save()
 
       return res.status(201).json({
@@ -219,7 +241,7 @@ exports.update = async (req, res, next) => {
     }
     console.log(utilisateur)
     // console.log(id)
-    let data = await Utilisateur.findByIdAndUpdate(testId, utilisateur)
+    let data = await Utilisateur.findByIdAndUpdate(testId, utilisateur, { runValidators: true })
     console.log(data)
     if (!data) {
       res.status(404).send({
@@ -246,6 +268,23 @@ exports.liste = async (req, res, next) => {
     return res.status(200).json({
       message: "Liste des "+type,
       data: liste
+    });
+  } catch(err) {
+    return res.status(500).json({
+      message: "Une erreur s'est produite",
+      error: err
+    });
+  };
+};
+
+exports.listeRestaurant = async (req, res, next) => {
+  try {
+    let listeRestaurant = await Utilisateur.find({
+      type: "restaurant"
+    });
+    return res.status(200).json({
+      message: "Liste des restaurants",
+      data: listeRestaurant
     });
   } catch(err) {
     return res.status(500).json({

@@ -1,0 +1,61 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="page-content-tab">
+
+      <div class="container-fluid">
+          <!-- Page-Title -->
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="page-title-box">
+                      <h4 class="page-title"></h4>
+                  </div><!--end page-title-box-->
+              </div><!--end col-->
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card">
+                  <div class="card-header">
+                      <div class="row align-items-center">
+                          <div class="col">
+                              <h4 class="card-title">Bénéfice par restaurant</h4>
+                          </div><!--end col-->
+                          <div class="col-auto">
+                          </div><!--end col-->
+                      </div>  <!--end row-->
+                  </div><!--end card-header-->
+                  <div class="card-body">
+                      <ul class="list-unsyled m-0 ps-0 transaction-history">
+                          <li *ngFor="let benefice of benefices" class="align-items-center d-flex justify-content-between">
+                              <div class="media">
+                                  <div class="media-body align-self-center ms-3">
+                                      <div class="transaction-data">
+                                          <h5 class="m-0 font-14">{{ benefice.nom_restaurant }}</h5>
+                                      </div>
+                                  </div><!--end media body-->
+                              </div>
+                              <span *ngIf="benefice.total == 0" class="text-danger">{{ benefice.total | currency }}</span>
+                              <span *ngIf="benefice.total != 0" class="text-success">{{ benefice.total | currency }}</span>
+                          </li>
+                      </ul>
+                  </div><!--end card-body-->
+              </div><!--end card-->
+
+
+
+
+
+
+              </div><!--end row-->
+            </div>
+          </div><!-- container -->
+
+      <!--Start Footer-->
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+      <!-- end Footer -->
+      <!--end footer-->
+  </div>
+  <!-- end page content -->
+</div>
+<!-- end page-wrapper -->

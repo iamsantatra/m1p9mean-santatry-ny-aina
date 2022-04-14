@@ -13,6 +13,9 @@ export class UtilisateurService {
   private utilisateurs: Utilisateur[] = [];
   private utilisateursUpdated = new Subject<Utilisateur[]>();
 
+  private restoUtilisateurs: Utilisateur[] = [];
+  private restoUtilisateursUpdated = new Subject<Utilisateur[]>();
+
   constructor(private http: HttpClient) {}
 
   getLivreur() {
@@ -38,15 +41,42 @@ export class UtilisateurService {
       });
   }
 
+  getRestaurant() {
+    this.http
+      .get<{ message: string; data: any }>(
+        BACKEND_URL + "/listeRestaurant"
+      )
+      .pipe(map((userData) => {
+        return userData.data.map((utilisateur: any) => {
+          return {
+            id: utilisateur._id,
+            nom: utilisateur.nom,
+            motDePasse: utilisateur.motDePasse,
+            email: utilisateur.email,
+            type: utilisateur.type,
+            status: utilisateur.status,
+            restaurant_id: utilisateur.restaurant_id
+          };
+        });
+      }))
+      .subscribe(transformedUser => {
+        this.restoUtilisateurs = transformedUser;
+        this.restoUtilisateursUpdated.next([...this.restoUtilisateurs]);
+      });
+  }
 
 
   getUtilisateursUpdateListener() {
     return this.utilisateursUpdated.asObservable();
   }
 
-  ajout(nom: string, email: string, motDePasse: string, type: string) {
+  getRestoUtilisateursUpdateListener() {
+    return this.restoUtilisateursUpdated.asObservable();
+  }
+
+  ajout(nom: string, email: string, motDePasse: string, type: string, restaurant_id: string) {
     // console.log("test")
-    const userData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse, type: type };
+    const userData: Utilisateur = {nom: nom, email: email, motDePasse: motDePasse, type: type, restaurant_id: restaurant_id };
     console.log(BACKEND_URL + "/ajout")
     return this.http
       .post<{message: string, data: Utilisateur}>(BACKEND_URL + "/ajout",  userData);

@@ -4,6 +4,7 @@ const PRIX_LIVRAISON_VILLE = 7000;
 const PRIX_LIVRAISON_PER = 10000;
 const ObjectID = require('mongodb').ObjectID
 const VCommande = require("../models/vcommande.model")
+const VbeneficeResto = require("../models/vbeneficeresto.model")
 
 
 exports.commandePlat = async (req, res, next) => {
@@ -45,6 +46,9 @@ exports.commandePlat = async (req, res, next) => {
     }
     dateLivraison = new Date(req.body.dateLivraison)
     dateLivraison.setHours( dateLivraison.getHours() + 3);
+    let platInfo = await Plat.findOne({
+      _id: ObjectID(req.body.plat_id)
+    })
     const commande = new Commande({
       plat_id: req.body.plat_id,
       utilisateur_id: req.userData.userId,
@@ -53,7 +57,9 @@ exports.commandePlat = async (req, res, next) => {
       typeLivraison: req.body.typeLivraison,
       prixLivraison: prixLivraisonCalcul,
       quantite: req.body.quantite,
-      dateLivraison: dateLivraison
+      dateLivraison: dateLivraison,
+      sumPrixAchat: platInfo.prixAchat * req.body.quantite,
+      sumPrixVente: platInfo.prixVente * req.body.quantite
     });
     try {
       const newCommande =  await commande.save();
@@ -289,10 +295,32 @@ exports.rechercheCommande = async (req, res, next) => {
       {"etat": req.params.etat}
     );
     console.log("----------------------")
-    console.log(listeCommande)
+    console.log(listeCommande.commandeUtilisateur)
     return res.status(200).json({
       message: "Liste des restaurants avec recherche",
       data: listeCommande
+    });
+  } catch(err) {
+    console.log(err)
+    return res.status(500).json({
+      message: "Une erreur s'est produite",
+      error: err
+    });
+  };
+};
+
+exports.beneficeResto = async (req, res, next) => {
+  try {
+
+    let benefice = await VbeneficeResto.find();
+    if(req.userData.type == 'restaurant') {
+
+       benefice = await VbeneficeResto.find({ "restaurant_id": ObjectID(req.userData.restaurant_id) });
+    }
+    console.log(benefice)
+    return res.status(200).json({
+      message: "Bénéfice",
+      data: benefice
     });
   } catch(err) {
     console.log(err)

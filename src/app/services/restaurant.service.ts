@@ -57,8 +57,26 @@ export class RestaurantService {
 
   }
 
-
   getRestaurantUpdateListener() {
     return this.restaurantsUpdated.asObservable();
+  }
+
+  ajout(nom: string, lieu: string, image: File) {
+    // console.log("test")
+    let formData: any = new FormData();
+    formData.append("nom", nom)
+    formData.append("lieu", lieu)
+    formData.append("avatar", image)
+    return this.http
+      .post<{message: string, data: Restaurant}>(BACKEND_URL + "/ajout",  formData, {
+        reportProgress: true,
+        observe: 'events',
+      });
+  }
+
+  supprimer(id: string | undefined) {
+    console.log(BACKEND_URL + "/supprimer")
+    return this.http
+      .delete<{message: string}>(BACKEND_URL + "/supprimer/" + id);
   }
 }

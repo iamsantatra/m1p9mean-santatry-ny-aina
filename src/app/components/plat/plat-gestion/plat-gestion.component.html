@@ -1,0 +1,162 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="page-content-tab">
+      <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title"></h4>
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="page-title-box">
+                  <div class="float-end">
+                  </div>
+                  <h4 class="page-title">Repas</h4>
+              </div><!--end page-title-box-->
+          </div><!--end col-->
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Ajouter</h4>
+                    </div><!--end col-->
+                </div>  <!--end row-->
+            </div>
+                <div class="card-body">
+                  <form [formGroup]="form"  (ngSubmit)="ajout()"  class="my-4" action="/" >
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="nom">Repas</label>
+                      <input type="text" [ngClass]="{ 'is-invalid': submitted && f['nomPlat'].errors }" class="form-control" id="nomPlat" formControlName="nomPlat" placeholder="Entrer le repas">
+                      <div class="invalid-feedback" *ngIf="submitted && f['nomPlat'].errors">Veuillez saisir le repas</div>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="categorie">Catégorie</label>
+                      <input type="text" [ngClass]="{ 'is-invalid': submitted && f['categorie'].errors }" class="form-control" id="categorie" formControlName="categorie" placeholder="Entrer une catégorie">
+                      <div class="invalid-feedback" *ngIf="submitted && f['categorie'].errors">Veuillez saisir une catégorie</div>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="categorie">Description</label>
+                      <textarea type="text" rows="6" class="form-control" id="description" formControlName="description" placeholder="Entrer une description" ></textarea>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="prixVente">Prix de vente</label>
+                      <input type="number" [ngClass]="{ 'is-invalid': submitted && f['prixVente'].errors }" class="form-control" id="prixVente" formControlName="prixVente" placeholder="Entrer une le prix de vente" min="500">
+                      <div class="invalid-feedback" *ngIf="submitted && f['prixVente'].errors">Veuillez saisir le prix de vente</div>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="prixAchat">Prix d'achat</label>
+                      <input type="number" [ngClass]="{ 'is-invalid': submitted && f['prixAchat'].errors }" class="form-control" id="prixAchat" formControlName="prixAchat" placeholder="Entrer une le prix d'achat" min="500">
+                      <div class="invalid-feedback" *ngIf="submitted && f['prixAchat'].errors">Veuillez saisir le prix d'achat</div>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                      <label class="form-label"  for="email">Image</label>
+                      <!-- <input type="email" ngModel [ngClass]="{ 'is-invalid': ajoutForm.submitted && emailInput.invalid }"  class="form-control" id="email" name="email" #emailInput="ngModel" placeholder="Entrer l'e-mail" required email> -->
+                        <input (change)="onImagePicked($event)" id="image" formControlName="image"  type="file" class="form-control" id="inputGroupFile02" >
+                        <!-- <div class="invalid-feedback" *ngIf="imageInput.invalid">Veuillez ajouter une image</div> -->
+                      </div><!--end form-group-->
+                      <div class="form-group mb-2">
+                      <div *ngIf="imageURL && imageURL !== ''">
+                        <img [src]="imageURL" class="img-fluid" [alt]="form.value.nom">
+                      </div></div>
+                      <div class="form-group mb-0 row">
+                        <div class="col-12">
+                            <div class="d-grid mt-3">
+                              <button class="btn btn-primary" type="submit" [disabled]="isLoading">Ajouter
+Plat                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span><span class="sr-only">Chargement...</span>
+                              </button>
+                            </div>
+                        </div><!--end col-->
+                    </div> <!--end form-group-->
+                </form><!--end form-->
+                      <!--end form-->
+
+                      <div *ngIf="ajoutFailed" class="alert alert-danger alert-dismissible fade show border-0 b-round" role="alert">
+                        {{ errorMessage }}.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+          </div><!--end row-->
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Liste</h4>
+                    </div><!--end col-->
+                </div>  <!--end row-->
+            </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="thead-light">
+                            <tr>
+                              <th>Repas</th>
+                              <th>Prix d'achat</th>
+                              <th>Prix de vente</th>
+                              <th>Status</th>
+                              <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let plat of plats">
+                                  <td>
+                                      <img *ngIf="plat.image != undefined" src="{{ plat.image }}" alt="" height="40" class="me-2">
+                                      <p class="d-inline-block align-middle mb-0">
+                                        <a href="" class="d-inline-block align-middle mb-0 product-name">{{ plat.nomPlat }}</a>
+                                      </p>
+                                      <br>
+                                      <span class="text-muted font-13">{{ plat.categorie }}</span>
+                                  </td>
+                                  <td>
+                                    {{ plat.prixAchat | currency }}
+                                  </td>
+                                  <td>
+                                    {{ plat.prixVente | currency }}
+                                  </td>
+                                  <td *ngIf="plat.etat == 0">
+                                    <span class="badge badge-soft-danger">Epuisé</span>
+                                  </td>
+                                  <td *ngIf="plat.etat == 1">
+                                    <span class="badge badge-soft-success">En stock</span>
+                                  </td>
+                                  <td>
+                                    <!-- (nomPlat: string,description: string, categorie: string, prixAchat: number, prixVente: number, restaurant_id: string, image: File, etat: string)  -->
+                                    <a *ngIf="plat.description!=''" href="update-plat/{{ plat.id }}/{{ plat.nomPlat }}/{{ plat.description }}/{{ plat.categorie }}/{{ plat.prixAchat }}/{{ plat.prixVente }}/{{ plat.etat }}"  class="text-dark"><i class="las la-pen text-secondary font-16"></i></a>
+                                    <a *ngIf="plat.description==''" href="update-plat/{{ plat.id }}/{{ plat.nomPlat }}/{{ plat.categorie }}/{{ plat.prixAchat }}/{{ plat.prixVente }}/{{ plat.etat }}"  class="text-dark"><i class="las la-pen text-secondary font-16"></i></a>
+                                    <a  [routerLink]="" (click)="supprimer(plat.id)" class="text-dark"><i class="las la-trash text-secondary font-16"></i></a>
+                                </td>
+                              </tr>
+                          </tbody>
+                        </table><!--end /table-->
+                    </div><!--end /tableresponsive-->
+                  </div>
+            </div><!--end card-->
+          </div><!--end row-->
+        </div>
+        </div>
+      </div><!-- container -->
+
+      <!--Start Footer-->
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+    <!-- end Footer -->
+    <!--end footer-->
+    </div>
+<!-- end page content -->
+</div>
+<!-- end page-wrapper -->

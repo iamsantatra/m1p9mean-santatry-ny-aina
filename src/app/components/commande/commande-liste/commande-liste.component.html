@@ -37,21 +37,27 @@
                   <div class="card">
                       <div class="card-header">
                         <div class="row align-items-center">
-                            <div class="col">
-                                <h4 class="card-title">Commandes</h4>
-                                <div class="col-lg-3">
-                                  <div *ngIf="type == 'e-kaly'" class="input-group">
-                                    <select [(ngModel)]="etat"  required>
-                                      <option class="w-20"  [value]=0>Commandé</option>
-                                      <option class="w-20"  [value]=1>Validé par le restaurant</option>
-                                      <option class="w-20"  [value]=2>Validé par E-Kaly</option>
-                                      <option class="w-20"  [value]=3>Livré</option>
-                                    </select>
-                                    <button type="button"  (click)="search()"  class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
-                                  </div>
+                            <div class="col-md-10">
+                              <h4 class="card-title">Commandes</h4>
+                              <div class="col-lg-3">
+                                <div *ngIf="type == 'e-kaly'" class="input-group">
+                                  <select [(ngModel)]="etat"  required>
+                                    <option class="w-20"  [value]=0>Commandé</option>
+                                    <option class="w-20"  [value]=1>Validé par le restaurant</option>
+                                    <option class="w-20"  [value]=2>Validé par E-Kaly</option>
+                                    <option class="w-20"  [value]=3>Livré</option>
+                                  </select>
+                                  <button type="button"  (click)="search()"  class="btn btn-primary btn-sm"><i class="fas fa-search"></i></button>
                                 </div>
+                              </div>
                             </div><!--end col-->
-                        </div>  <!--end row-->
+                            <div *ngIf="type == 'restaurant'" class="col-md-2">
+                              <div *ngFor="let benefice of benefices" class="card-body">
+                                <span class="badge font-12 fw-bold bg-soft-secondary p-2">Bénéfice</span>
+                                <h4 class="mb-0 font-22 fw-bold">{{ benefice.total | currency }}</h4>
+                              </div><!--end card-body-->
+                            </div><!--end col-->
+                        </div>
                       </div><!--end card-header-->
                       <div class="card-body">
                         <div class="table-responsive">

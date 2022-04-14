@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 const platSchema = mongoose.Schema({
   nomPlat: {
     type: String,
-    required: true
+    required: [true, "Veuillez entrer le nom du repas"]
   },
   description : { // ingredient
     type: String
@@ -28,7 +28,7 @@ const platSchema = mongoose.Schema({
     default: 1
   },
   image: {
-    type: String,
+    type: String
   },
   restaurant_id: {
     type: Schema.Types.ObjectId, ref: 'Restaurant'
@@ -37,4 +37,3 @@ const platSchema = mongoose.Schema({
 
 platSchema.plugin(uniqueValidator)
 module.exports = mongoose.model("Plat", platSchema)
-

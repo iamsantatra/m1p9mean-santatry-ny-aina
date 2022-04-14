@@ -10,5 +10,6 @@ router.put("/updateCommande", authorize([type.admin, type.restaurant, type.livre
 router.get("/listeCommande", authorize([type.admin, type.restaurant, type.livreur]), commandeController.listeCommande)
 router.get("/recherche/:etat", authorize([type.admin]), commandeController.rechercheCommande)
 router.delete("/deleteCommande/:id", authorize([type.admin, type.restaurant]), commandeController.deleteCommande)
+router.get("/beneficeResto", authorize([type.admin, type.restaurant]), commandeController.beneficeResto)
 
 module.exports = router;

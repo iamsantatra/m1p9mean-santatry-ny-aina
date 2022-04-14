@@ -6,4 +6,5 @@ export interface Utilisateur {
   type?: string;
   status?: string;
   confirmationCode?: string;
+  restaurant_id?: string;
 }

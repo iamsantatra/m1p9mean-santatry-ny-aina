@@ -18,6 +18,7 @@ db.restaurants.insertMany(
 		}
 	]
 )
+db.restaurants.createIndex( { subject: "text" } )
 
 db.plats.insertMany(
 	[
@@ -29,67 +30,67 @@ db.plats.insertMany(
 			prixVente: 20000,
 			etat: 1,
 			image: "assets/images/plats/restaurant-duo/sandwich-poulet.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad4")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c56")
 		},
 		{
 			nomPlat: "Soupe van-tan",
 			description: "Les wonton sont soit servis en soupe dans un bouillon clair, ou en apéritif lorsqu'ils sont frits. Ils sont garnis.",
 			categorie: "Soupe",
-			prixAchat: 10000,
-			prixVente: 15000,
+			prixAchat: 21000,
+			prixVente: 25000,
 			etat: 1,
 			image: "assets/images/plats/restaurant-duo/soupe-van-tan.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad4")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c56")
 		},
 		{
 			nomPlat: "Soupe spéciale",
 			description: "Soupe spéciale fait maison",
 			categorie: "Soupe",
-			prixAchat: 15000,
-			prixVente: 24000,
+			prixAchat: 25000,
+			prixVente: 30000,
 			etat: 1,
 			image: "assets/images/plats/restaurant-duo/soupe-speciale.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad4")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c56")
 		},
 		{
 			nomPlat: "Hamburger spécial",
 			description: "Hamburger spécial fait maison. Au porc, au boeuf, au dindon ou végé, on voudra tous les essayer, pour faire durer le plaisir tout l'été!",
 			categorie: "Hamburger",
-			prixAchat: 11000,
-			prixVente: 13000,
+			prixAchat: 25000,
+			prixVente: 30000,
 			etat: 1,
 			image: "assets/images/plats/serependity/hamburger-special.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad5")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c57")
 		},
 		{
 			nomPlat: "Pizza gg",
 			description: "Pizza entourée de saucisse et de fromage",
 			categorie: "Pizza",
 			prixAchat: 22000,
-			prixVente: 24000,
+			prixVente: 28000,
 			etat: 1,
 			image: "assets/images/plats/serependity/pizza-gg.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad5")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c57")
 		},
 		{
 			nomPlat: "Mine-sao crevette",
 			description: "Nouilles sautées aux crevettes et pois gourmands",
 			categorie: "Mine-sao",
-			prixAchat: 9000,
-			prixVente: 15000,
+			prixAchat: 20000,
+			prixVente: 23000,
 			etat: 1,
 			image: "assets/images/plats/kibota/mine-sao-crevette.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad6")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c58")
 		},
 		{
 			nomPlat: "Mine-sao tsa-tsiou",
 			description: "Mine-sao tsa-tsiou fait maison",
 			categorie: "Mine-sao",
-			prixAchat: 8000,
-			prixVente: 12000,
+			prixAchat: 15000,
+			prixVente: 20000,
 			etat: 1,
 			image: "assets/images/plats/kibota/mine-sao-tsa-tsiou.jpg",
-			restaurant_id: ObjectId("62533c9720686ab247993ad6")
+			restaurant_id: ObjectId("6254a8f5f57e829301fd7c58")
 		}
 	]
 )
@@ -103,7 +104,7 @@ db.utilisateurs.insertMany(
 			email: "restaurant.duo@gmail.com",
 			type: "restaurant",
 			status: "active",
-      restaurant_id: "624b3eb22a08b22d758a8288"
+      restaurant_id: ObjectId("6254a8f5f57e829301fd7c56")
 		},
 		{
 			nom: "Serependity",
@@ -111,7 +112,7 @@ db.utilisateurs.insertMany(
 			email: "serependity@gmail.com",
 			type: "restaurant",
 			status: "active",
-      restaurant_id: "624b3eb22a08b22d758a8289"
+      restaurant_id: ObjectId("6254a8f5f57e829301fd7c57")
 		},
     {
       nom: "Kibota",
@@ -119,7 +120,7 @@ db.utilisateurs.insertMany(
 			email: "kibota@gmail.com",
 			type: "restaurant",
 			status: "active",
-      restaurant_id: "624b3eb22a08b22d758a828a"
+      restaurant_id: ObjectId("6254a8f5f57e829301fd7c58")
 		},
 		{
 			nom: "E-kaly",
@@ -147,37 +148,36 @@ db.utilisateurs.insertMany(
 			motDePasse: "$2b$10$rfCEvo8nYI2rFqdgVpyzeu/mNuccmlwO8YDNvTmVDwA/.LGPHPbpm",
 			email: "jerico@gmail.com",
 			type: "client",
-			status: "active",
-      restaurant_id: "624b3eb22a08b22d758a8289"
+			status: "active"
 		},
 	]
 )
 
-// -- db.commandes.aggregate([
-// --   {
-// --     $lookup: {
-// --       from: "plats",
-// --       localField: "plat_id",
-// --       foreignField: "_id",
-// --       as: "commandePlat"
-// --     }
-// --   },
-// --   {
-// --     $lookup: {
-// --       from: "restaurants",
-// --       localField: "commandePlat.restaurant_id",
-// --       foreignField: "_id",
-// --       as: "restaurantCommande"
-// --     }
-// --   },
-// --   {
-// --     $project: {
-// --         "_id":0,
-// --         "commandePlat._id":0,
-// --         "restaurantCommande._id":0
-// --     }
-// --   }
-// -- ]).toArray()
+-- db.commandes.aggregate([
+--   {
+--     $lookup: {
+--       from: "plats",
+--       localField: "plat_id",
+--       foreignField: "_id",
+--       as: "commandePlat"
+--     }
+--   },
+--   {
+--     $lookup: {
+--       from: "restaurants",
+--       localField: "commandePlat.restaurant_id",
+--       foreignField: "_id",
+--       as: "restaurantCommande"
+--     }
+--   },
+--   {
+--     $project: {
+--         "_id":0,
+--         "commandePlat._id":0,
+--         "restaurantCommande._id":0
+--     }
+--   }
+-- ]).toArray()
 
 
 db.createView('VCommande','commandes', [
@@ -205,4 +205,22 @@ db.createView('VCommande','commandes', [
       as: "commandeUtilisateur"
     }
   }
+])
+
+db.createView("VbeneficeResto", "VCommande",  [
+	{
+		$match: { etat: 3 }
+	},
+	{
+		$group: {
+			_id: "$commandeRestaurant._id",
+			restaurant_id: { $first: '$commandeRestaurant._id' },
+			nom_restaurant: { $first: '$commandeRestaurant.nom' },
+			total: {
+				$sum: {
+					$subtract: ["$sumPrixVente", "$sumPrixAchat"]
+					}
+				}
+			}
+	}
 ])

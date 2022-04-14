@@ -146,7 +146,9 @@ export class PanierComponent implements OnInit {
           typeLivraison : typeLivraison,
           dateLivraison :form.value.dateLivraison+" "+form.value.timeLivraison ,
           etat: 0,
-          prixLivraison: prixLivraison
+          prixLivraison: prixLivraison,
+          sumPrixAchat: 0,
+          sumPrixVente: 0
         }
 
         // const postData = new FormData();

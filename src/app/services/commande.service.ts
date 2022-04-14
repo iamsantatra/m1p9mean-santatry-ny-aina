@@ -8,6 +8,7 @@ import { Plat } from '../models/plat.model';
 import { Restaurant } from '../models/restaurant.model';
 import { VCommande } from '../models/vcommande.model';
 import { Utilisateur } from '../models/utilisateur.model';
+import { Vbenefice } from '../models/vbenefice.model';
 
 const BACKEND_URL = environment.apiUrl + "commande";
 @Injectable({
@@ -18,6 +19,8 @@ export class CommandeService {
 
   private commandes: VCommande[] = [];
   private commandesUpdated = new Subject<VCommande[]>();
+  private benefices: Vbenefice[] = [];
+  private beneficesUpdated = new Subject<Vbenefice[]>();
 
   constructor(private http: HttpClient) {}
 
@@ -48,7 +51,9 @@ export class CommandeService {
             typeLivraison: vCommande.typeLivraison,
             prixLivraison: vCommande.prixLivraison,
             quantite: vCommande.quantite,
-            dateLivraison: d.toString()
+            dateLivraison: d.toString(),
+            sumPrixAchat: vCommande.sumPrixAchat,
+            sumPrixVente: vCommande.sumPrixVente
           }
           let plat: Plat = {
             id: vCommande.commandePlat[0]._id,
@@ -122,7 +127,9 @@ export class CommandeService {
           typeLivraison: vCommande.typeLivraison,
           prixLivraison: vCommande.prixLivraison,
           quantite: vCommande.quantite,
-          dateLivraison: d.toString()
+          dateLivraison: d.toString(),
+          sumPrixAchat: vCommande.sumPrixAchat,
+          sumPrixVente: vCommande.sumPrixVente
         }
         let plat: Plat = {
           id: vCommande.commandePlat[0]._id,
@@ -168,10 +175,35 @@ export class CommandeService {
     });
   }
 
-
   annuler(idAzo: string) {
     console.log(idAzo)
     return this.http
       .delete<{message: string}>(BACKEND_URL + "/deleteCommande/" +idAzo)
+  }
+
+  getBeneficeResto() {
+    this.http
+      .get<{ message: string; data: any }>(
+        BACKEND_URL + "/beneficeResto"
+      )
+      .pipe(map((beneficeRestoData) => {
+        console.log(beneficeRestoData)
+        return beneficeRestoData.data.map((benefice: any) => {
+          return {
+            id: benefice._id,
+            restaurant_id: benefice.restaurant_id,
+            nom_restaurant: benefice.nom_restaurant,
+            total: benefice.total
+          };
+        });
+      }))
+      .subscribe(transformedBenefice => {
+        this.benefices = transformedBenefice;
+        this.beneficesUpdated.next([...this.benefices]);
+      });
+  }
+
+  getBeneficeUpdateListener() {
+    return this.beneficesUpdated.asObservable();
   }
 }

@@ -20,12 +20,16 @@ export class RestaurantListeComponent implements OnInit, OnDestroy{
   constructor(public restosService: RestaurantService) { }
 
   ngOnInit(){
+    this.isLoading = true
     this.restosService.getRestaurant();
     this.restosSub = this.restosService.getRestaurantUpdateListener()
       .subscribe((restos: Restaurant[]) => {
         this.restaurants = restos;
+
       })
+      this.isLoading = false
   }
+
   ngOnDestroy() {
     this.restosSub.unsubscribe();
   }

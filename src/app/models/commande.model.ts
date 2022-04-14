@@ -9,4 +9,6 @@ export interface Commande {
   prixLivraison: number;
   quantite: number;
   dateLivraison: string;
+  sumPrixAchat: number;
+  sumPrixVente: number;
 }

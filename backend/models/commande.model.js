@@ -41,6 +41,14 @@ const commandeSchema = mongoose.Schema({
     type: Date,
     required: [true, "Veuillez saisir la date de livraison"]
   },
+  sumPrixAchat: {
+    type: Number,
+    required: true
+  },
+  sumPrixVente: {
+    type: Number,
+    required: true
+  }
 }
 );
 

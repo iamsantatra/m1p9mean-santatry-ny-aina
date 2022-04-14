@@ -1,0 +1,225 @@
+<body data-layout="horizontal" class="">
+  <app-header></app-header>
+  <div class="page-wrapper">
+    <div class="page-content-tab">
+      <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-title-box">
+                    <h4 class="page-title"></h4>
+                </div><!--end page-title-box-->
+            </div><!--end col-->
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+          <div class="col-sm-12">
+              <div class="page-title-box">
+                  <div class="float-end">
+                  </div>
+                  <h4 class="page-title">Restaurant</h4>
+              </div><!--end page-title-box-->
+          </div><!--end col-->
+
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Ajouter</h4>
+                    </div><!--end col-->
+                </div>  <!--end row-->
+            </div>
+                <div class="card-body">
+                  <form [formGroup]="form" (ngSubmit)="ajout()"  class="my-4" action="/" >
+                    <div class="form-group mb-2">
+                      <label class="form-label" for="nom">Nom</label>
+                      <!-- <input type="nom" ngModel [ngClass]="{ 'is-invalid': ajoutForm.submitted && nomInput.invalid }"  class="form-control" id="nom" name="nom" #nomInput="ngModel" placeholder="Entrer le nom du restaurant" required nom>
+                      <div class="invalid-feedback" *ngIf="nomInput.invalid">Veuillez saisir un nom valide</div> -->
+                      <input type="text" [ngClass]="{ 'is-invalid': submitted && f['nom'].errors }" class="form-control" id="nom" formControlName="nom" placeholder="Entrer le nom du restaurant" >
+                      <!-- <div class="invalid-feedback" >Veuillez saisir un nom valide</div> -->
+                      <div class="invalid-feedback" *ngIf="submitted && f['nom'].errors">Veuillez saisir un nom valide</div>
+                    </div><!--end form-group-->
+
+                    <div class="form-group mb-2">
+                        <label class="form-label"  for="email">Image</label>
+                          <input (change)="onImagePicked($event)" id="image" formControlName="image"  type="file" class="form-control" id="inputGroupFile02" >
+                        </div><!--end form-group-->
+                        <div class="form-group mb-2">
+                        <div *ngIf="imageURL && imageURL !== ''">
+                          <img [src]="imageURL" class="img-fluid"   [alt]="form.value.nom">
+                        </div></div>
+                      <div class="form-group">
+                          <label class="form-label" for="lieu">Lieu</label>
+                          <input type="text" [ngClass]="{ 'is-invalid': submitted && f['lieu'].errors }" class="form-control" formControlName="lieu" id="lieu" placeholder="Entrer un lieu" >
+                          <div class="invalid-feedback" *ngIf="submitted && f['lieu'].errors">Veuillez saisir un lieu</div>
+                      </div><!--end form-group-->
+
+                      <div class="form-group mb-0 row">
+                          <div class="col-12">
+                              <div class="d-grid mt-3">
+                                  <button class="btn btn-primary" type="submit">Ajouter
+                                    <!-- <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span><span class="sr-only">Chargement...</span> -->
+                                  </button>
+                              </div>
+                          </div><!--end col-->
+                      </div> <!--end form-group-->
+                  </form>
+                  <!--end form-->
+                  <div *ngIf="ajoutFailed" class="alert alert-danger alert-dismissible fade show border-0 b-round" role="alert">
+                    {{ errorMessage }}.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div><!--end card-body-->
+            </div><!--end card-->
+          </div><!--end row-->
+          <div class="col-lg-7">
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Liste</h4>
+                    </div><!--end col-->
+                </div>  <!--end row-->
+            </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table mb-0">
+                            <thead class="thead-light">
+                            <tr>
+                              <th>Nom</th>
+                              <th>Lieu</th>
+                              <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let restaurant of restaurants">
+                                  <td>
+                                      <img src="{{ restaurant.image }}" alt="" height="40" class="me-2">
+                                      <p class="d-inline-block align-middle mb-0">
+                                          <a href="" class="d-inline-block align-middle mb-0 product-name">{{ restaurant.nom }}</a>
+                                      </p>
+                                  </td>
+                                  <td>
+                                    {{ restaurant.lieu }}
+                                  </td>
+
+                                  <td>
+                                      <a [routerLink]="" (click)="supprimer(restaurant.id)" class="text-dark"><i class="las la-trash text-secondary font-16"></i></a>
+                                </td>
+                              </tr>
+                          </tbody>
+                        </table><!--end /table-->
+                    </div><!--end /tableresponsive-->
+                  </div>
+            </div><!--end card-->
+          </div><!--end row-->
+
+        </div>
+
+        <div class="row">
+          <div class="col-lg-5">
+            <div class="card">
+              <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="card-title">Ajouter utilisateur</h4>
+                    </div><!--end col-->
+                </div>  <!--end row-->
+            </div>
+            <div class="card-body">
+              <form (submit)="onSignup(signupForm)"  #signupForm="ngForm" class="my-4" action="/" >
+                <div class="form-group mb-2">
+                  <label class="form-label" for="nom">Restaurant</label>
+                  <select class="form-select" ngModel [ngClass]="{ 'is-invalid': signupForm.submitted && restaurantInput.invalid }" name="restaurant_id" #restaurantInput="ngModel" required>
+                    <option class="w-20" *ngFor="let restaurant of restaurants" [value]="restaurant.id">{{ restaurant.nom }}</option>
+                  </select>
+                  <div class="invalid-feedback" *ngIf="restaurantInput.invalid">Veuillez saisir le restaurant</div>
+                </div><!--end form-group-->
+                <div class="form-group mb-2">
+                  <label class="form-label" for="nom">Nom</label>
+                  <input type="nom" ngModel [ngClass]="{ 'is-invalid': signupForm.submitted && nomInput.invalid }"  class="form-control" id="nom" name="nom" #nomInput="ngModel" placeholder="Entrer le nom du livreur" required nom>
+                  <div class="invalid-feedback" *ngIf="nomInput.invalid">Veuillez saisir un nom valide</div>
+                </div><!--end form-group-->
+                  <div class="form-group mb-2">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" ngModel [ngClass]="{ 'is-invalid': signupForm.submitted && emailInput.invalid }"  class="form-control" id="email" name="email" #emailInput="ngModel" placeholder="Entrer l'e-mail" required email>
+                    <div class="invalid-feedback" *ngIf="emailInput.invalid">Veuillez saisir une adresse e-mail valide</div>
+                  </div><!--end form-group-->
+
+                  <div class="form-group">
+                      <label class="form-label" for="motDePasse">Mot de passe</label>
+                      <input type="password" minlength="8" ngModel [ngClass]="{ 'is-invalid': signupForm.submitted && passwordInput.invalid }" class="form-control" name="motDePasse" #passwordInput="ngModel" id="motDePasse" placeholder="Entrer le mot de passe" required>
+                      <div class="invalid-feedback" *ngIf="passwordInput.invalid">Veuillez saisir un mot de passe valide</div>
+                  </div><!--end form-group-->
+
+                  <div class="form-group mb-0 row">
+                      <div class="col-12">
+                          <div class="d-grid mt-3">
+                              <button class="btn btn-primary" type="submit" [disabled]="isLoading">Ajouter
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span><span class="sr-only">Chargement...</span>
+                              </button>
+                          </div>
+                      </div><!--end col-->
+                  </div> <!--end form-group-->
+              </form><!--end form-->
+
+              <div *ngIf="isSignupFailed" class="alert alert-danger alert-dismissible fade show border-0 b-round" role="alert">
+                {{ errorMessageS }}.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+        </div><!--end card-body-->
+            </div><!--end card-->
+          </div><!--end col-->
+          <div class="col-lg-7">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header">
+                  <div class="row align-items-center">
+                      <div class="col">
+                          <h4 class="card-title">Liste utilisateur</h4>
+                      </div><!--end col-->
+                  </div>  <!--end row-->
+                </div>
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead class="thead-light">
+                        <tr>
+                          <!-- <th>ID</th> -->
+                          <th>Nom</th>
+                          <th>Email</th>
+                          <th>ID restaurant</th>
+                          <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let user of users">
+                            <!-- <th>{{ user.id }}</th> -->
+                            <th>{{ user.nom }}</th>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.restaurant_id }}</td>
+                            <td>
+                              <a [routerLink]="" (click)="supprimerU(user.id)" class="text-dark"><i class="las la-trash text-secondary font-16"></i></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                    </table><!--end /table-->
+                </div><!--end /tableresponsive-->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div><!-- container -->
+
+      <!--Start Footer-->
+      <!-- Footer Start -->
+      <app-footer></app-footer>
+    <!-- end Footer -->
+    <!--end footer-->
+    </div>
+<!-- end page content -->
+</div>
+<!-- end page-wrapper -->
