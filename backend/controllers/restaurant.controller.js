@@ -1,5 +1,7 @@
 const Restaurant = require("../models/restaurant.model")
 const ObjectID = require('mongodb').ObjectID
+const cloudinary = require("../configs/cloudinary.config");
+const fs =  require('fs');
 
 
 exports.listeRestaurant = async (req, res, next) => {
@@ -45,7 +47,6 @@ exports.rechercheRestaurant = async (req, res, next) => {
   };
 };
 
-
 exports.ajout = async (req, res, next) => {
   try {
     let restoTest = await Restaurant.findOne({ "nom" : req.body.nom})
@@ -65,9 +66,27 @@ exports.ajout = async (req, res, next) => {
     })
     if(req.file != undefined) {
       console.log("misy")
+
+      const uploader = async(path) => await cloudinary.uploads(path, 'Images');
+
+
+      const file = req.file;
+      console.log(req.file)
+
+
+        const { path } = file;
+        const newPath = await uploader(path)
+        const url = newPath
+        fs.unlinkSync(path)
+
+      // return res.status(200).json({
+      //   message: 'images uploady',
+      //   data: urls
+      // })
+      console.log(url)
       restaurant = new Restaurant({
         nom: req.body.nom,
-        image:  "assets/images/" + req.file.filename,
+        image: url.url,
         lieu: req.body.lieu
       })
     }

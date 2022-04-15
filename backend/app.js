@@ -6,7 +6,8 @@ const utilisateurRoutes = require("./routes/utilisateur.routes");
 const restaurantRoutes = require("./routes/restaurant.routes");
 const platRoutes = require("./routes/plat.routes");
 const commandeRoutes = require("./routes/commande.routes");
-const Commandes = require("./models/commande.model")
+// const uploadRoutes = require("./routes/upload.routes");
+// const Commandes = require("./models/commande.model")
 path = require('path')
 
 
@@ -70,6 +71,7 @@ app.use("/api/utilisateur", utilisateurRoutes);
 app.use("/api/restaurant", restaurantRoutes);
 app.use("/api/plat", platRoutes);
 app.use("/api/commande", commandeRoutes);
+// app.use("/api/route", uploadRoutes)
 app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, "angular", "index.html"))
 })

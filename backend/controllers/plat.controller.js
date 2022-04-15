@@ -1,6 +1,7 @@
 const Plat = require("../models/plat.model")
 const Restaurant = require("../models/restaurant.model")
 const ObjectID = require('mongodb').ObjectID
+const cloudinary = require("../configs/cloudinary.config")
 
 exports.listePlatRestaurant = async (req, res, next) => {
 
@@ -125,6 +126,17 @@ exports.ajout = async (req, res, next) => {
     })
     if(req.file != undefined) {
       console.log("misy")
+
+      const uploader = async(path) => await cloudinary.uploads(path, 'Images');
+
+
+      const file = req.file;
+      console.log(req.file)
+
+      const { path } = file;
+      const newPath = await uploader(path)
+      const url = newPath
+      fs.unlinkSync(path)
       plat = new Plat({
         nomPlat: req.body.nomPlat,
         description: req.body.description,
@@ -132,7 +144,7 @@ exports.ajout = async (req, res, next) => {
         prixAchat: req.body.prixAchat,
         prixVente: req.body.prixVente,
         etat: 1,
-        image:  "assets/images/" + req.file.filename,
+        image:  url.url,
         restaurant_id: ObjectID(req.body.restaurant_id)
       })
     }
@@ -210,6 +222,17 @@ exports.update = async (req, res, next) => {
     }
     console.log("fichier", req.file)
     if(req.file != undefined) {
+
+      const uploader = async(path) => await cloudinary.uploads(path, 'Images');
+
+
+      const file = req.file;
+      console.log(req.file)
+
+      const { path } = file;
+      const newPath = await uploader(path)
+      const url = newPath
+      fs.unlinkSync(path)
       plat = {
         nomPlat: req.body.nomPlat,
         description: req.body.description,
@@ -217,7 +240,7 @@ exports.update = async (req, res, next) => {
         prixAchat: req.body.prixAchat,
         prixVente: req.body.prixVente,
         etat: req.body.etat,
-        image:  "assets/images/" + req.file.filename
+        image:  url.url
       }
     }
     console.log(plat)
