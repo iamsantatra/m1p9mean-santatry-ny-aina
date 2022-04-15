@@ -69,7 +69,7 @@ export class PlatUpdateComponent implements OnInit {
         case HttpEventType.Response:
           console.log('User successfully created!', event.body);
       }
-      this.redirect.navigate(['repas'])
+      // this.redirect.navigate(['repas'])
     }, (error) => {
       console.log(error)
       this.ajoutFailed = true;

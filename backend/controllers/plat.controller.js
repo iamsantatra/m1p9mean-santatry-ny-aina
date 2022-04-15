@@ -2,6 +2,7 @@ const Plat = require("../models/plat.model")
 const Restaurant = require("../models/restaurant.model")
 const ObjectID = require('mongodb').ObjectID
 const cloudinary = require("../configs/cloudinary.config")
+const fs =  require('fs');
 
 exports.listePlatRestaurant = async (req, res, next) => {
 
