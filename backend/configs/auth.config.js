@@ -1,5 +1,5 @@
 module.exports = {
   secret: "token_activation",
-  user: "test.fitahiana@gmail.com",
-  pass: "wudangchan",
+  user: "santatra.rajohnson@gmail.com",
+  pass: "fbrpsjvssshanlby",
 };
